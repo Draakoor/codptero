@@ -13,3 +13,5 @@ Set the correct log path in iw4madmin (for example /codlogs/mw2/logs/games_mp.lo
 For configuration for iw4madmin check https://github.com/RaidMax/IW4M-Admin/wiki/Configuration   
     
 For IW4MAdmin use the docker image attach here in this repo or from docker.io docker.io/draakoor/iw4madmin:latest if you want to edit the egg.
+
+Note: For Call of Duty 4 you need to upload the game files to a mount, the files for Call of Duty 4 are not included in the egg
