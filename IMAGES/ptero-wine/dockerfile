@@ -5,7 +5,7 @@
 # ----------------------------------
 FROM ubuntu:focal
 
-LABEL maintainer="GaryCraft@SpaceProject <garycraft@our-space.xyz>"
+LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
 ENV WINEDEBUG=fixme-all
 ENV WINEARCH=win64
