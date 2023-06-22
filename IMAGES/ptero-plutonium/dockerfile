@@ -5,7 +5,7 @@
 # ----------------------------------
 FROM ghcr.io/garycraft/ptero-wine:latest
 
-LABEL maintainer="draakoor <dominique@wellisch-itservice.dee>"
+LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
 USER root
 
