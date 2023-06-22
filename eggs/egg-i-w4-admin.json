@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-06-22T16:15:30+02:00",
+    "name": "IW4Admin",
+    "author": "dominique@wellisch-itservice.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "docker.io\/draakoor\/iw4madmin:latest": "docker.io\/draakoor\/iw4madmin:latest"
+    },
+    "file_denylist": [],
+    "startup": "dotnet Lib\/IW4MAdmin.dll",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"IW4MAdmin is up to date\"\r\n}",
+        "logs": "{}",
+        "stop": "^c"
+    },
+    "scripts": {
+        "installation": {
+            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.06.10.2-prerelease\/IW4MAdmin-2023.06.10.2.zip\r\ncd \/mnt\/server && unzip -o IW4MAdmin-2023.06.10.2.zip\r\ncd \/mnt\/server && rm IW4MAdmin-2023.06.10.2.zip",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
