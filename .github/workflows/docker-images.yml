@@ -41,7 +41,7 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ghcr.io/draakoor/${{ matrix.tag }}:latest
+            ghcr.io/draakoor/codptero/${{ matrix.tag }}:latest
           #tags: |
           #  ghcr.io/draakoor/${{ matrix.tag }}:${{ steps.extract_branch.outputs.branch }}
 
