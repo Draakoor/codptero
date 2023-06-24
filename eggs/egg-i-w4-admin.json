@@ -10,7 +10,7 @@
     "description": null,
     "features": null,
     "docker_images": {
-        "docker.io\/draakoor\/iw4madmin:latest": "docker.io\/draakoor\/iw4madmin:latest"
+        "docker.io\/draakoor\/iw4madmin:latest": "ghcr.io\/draakoor\/codptero\/ptero-iw4madmin:latest"
     },
     "file_denylist": [],
     "startup": "dotnet Lib\/IW4MAdmin.dll",
