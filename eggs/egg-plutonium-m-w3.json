@@ -10,7 +10,7 @@
     "description": null,
     "features": null,
     "docker_images": {
-        "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/garycraft\/ptero-plutonium:latest"
+        "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest"
     },
     "file_denylist": [],
     "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/ -dedicated +start_map_rotate +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +set sv_config {{PLUTOCFG}}",
