@@ -1,0 +1,72 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-08-11T21:06:23+02:00",
+    "name": "Plutonium BO1",
+    "author": "dominique@wellisch-itservice.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/garycraft\/ptero-plutonium:latest"
+    },
+    "file_denylist": [],
+    "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/ -dedicated +start_map_rotate +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +set sv_config {{PLUTOCFG}}",
+    "config": {
+        "files": "{\r\n    \"Plutonium\/T5Server.sh\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"PORT\": \"{{server.build.default.port}}\",\r\n            \"KEY\": \"{{server.build.env.PLUTOKEY}}\",\r\n            \"MODE\": \"{{server.build.env.PLUTOMODE}}\",\r\n            \"PAT\": \"\/home\/container\/\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n\r\napt -y update\r\napt -y --no-install-recommends install unzip wget ca-certificates\r\n\r\n## Mount Pterodactyl Docker Container\r\nif [ ! -d \/mnt\/server\/ ]; then\r\n    mkdir \/mnt\/server\/\r\nfi\r\n\r\n## Go to server directory\r\ncd \/mnt\/server\r\n\r\n## Download Latest Server File Version\r\necho \"Downloading latest version of plutonium please wait...\"\r\nwget ${SERVER_DOWNLOAD} -q --show-progress\r\n\r\n## Extract Server\r\nunzip -o bo1.zip\r\nrm bo1.zip\r\n\r\nchmod -R 777 .\/*\r\n## Make User Aware of the Setup Origin\r\necho \"# Unofficial Pterodactyl-Plutonium BO1 Server\" > README.md\r\n\r\necho \"Server Succesfully Installed Enjoy!\"",
+            "container": "debian:buster-slim",
+            "entrypoint": "sh"
+        }
+    },
+    "variables": [
+        {
+            "name": "Plutonium server key",
+            "description": "Paste the server key from https:\/\/platform.plutonium.pw\/serverkeys",
+            "env_variable": "PLUTOKEY",
+            "default_value": "placeServerKeyHere",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Mode",
+            "description": "Game Mode\r\n(Multiplayer  -> t5mp)\r\n(Zombie -> t5sp)",
+            "env_variable": "PLUTOMODE",
+            "default_value": "t5mp",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:t5mp,t5sp",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Config",
+            "description": "The configuration file the server will use\r\n(Multiplayer  -> dedicated.cfg)\r\n(Zombie -> dedicated_sp.cfg)",
+            "env_variable": "PLUTOCFG",
+            "default_value": "dedicated.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:dedicated.cfg,dedicated_sp.cfg",
+            "field_type": "text"
+        },
+        {
+            "name": "Download File",
+            "description": "The Server File this server will download and use to run plutonium.\r\nPlease use this with caution, this could enable a user to run arbitrary code which could be potentially harmful.",
+            "env_variable": "SERVER_DOWNLOAD",
+            "default_value": "https:\/\/wellisch-itservice.de\/bo1.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
+            "field_type": "text"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-08-11T21:06:29+02:00",
+    "name": "CODOU",
+    "author": "dominique@wellisch-itservice.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "quay.io\/parkervcp\/pterodactyl-images:base_debian": "quay.io\/parkervcp\/pterodactyl-images:base_debian"
+    },
+    "file_denylist": [],
+    "startup": ".\/coduo_lnxded +set net_port {{SERVER_PORT}} +set g_gametype tdm +map mp_hurtgen +set sv_maxclient 18 +set pb_sv_enable 1 +exec server.cfg",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "quit"
+    },
+    "scripts": {
+        "installation": {
+            "script": "echo \"Install COD1 debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install unzip git screen curl wget gcc-multilib g++-multilib -y\r\napt-get -y install libstdc++5:i386\r\napt-get -y install libmysqlclient-dev:i386\r\n\r\necho \"### Downloading COD1 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/cod1.zip\r\ncd \/mnt\/server && unzip -o cod1.zip\r\ncd \/mnt\/server && rm cod1.zip",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}

@@ -1,0 +1,52 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-08-11T21:06:28+02:00",
+    "name": "IW6x",
+    "author": "dominique@wellisch-itservice.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "quay.io\/parkervcp\/pterodactyl-images:debian_wine": "quay.io\/parkervcp\/pterodactyl-images:debian_wine"
+    },
+    "file_denylist": [],
+    "startup": "wine iw6x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec {{SERVERCFG}} +map_rotate",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "echo \"Install IW6x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading IW6X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/iw6x.zip\r\ncd \/mnt\/server && unzip -o iw6x.zip\r\ncd \/mnt\/server && rm iw6x.zip",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Config",
+            "description": "The configuration file the server will use\r\n(Multiplayer  -> server.cfg)\r\n(Zombie -> server_zm.cfg)",
+            "env_variable": "SERVERCFG",
+            "default_value": "server.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:server.cfg,server_zm.cfg",
+            "field_type": "text"
+        },
+        {
+            "name": "Zombie Mode",
+            "description": "Select Zombie CFG and Select this if you want zombies",
+            "env_variable": "Zombie",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        }
+    ]
+}

@@ -1,0 +1,102 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-08-11T21:06:20+02:00",
+    "name": "boiii",
+    "author": "stefanukpadd@gmail.com",
+    "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/stefanuk12\/ptero-boiii:latest": "ghcr.io\/stefanuk12\/ptero-boiii:latest"
+    },
+    "file_denylist": [],
+    "startup": "[ $IW4M == 1 ] && sleep 30 && \"${HOME}\/iw4m-log-server\" -p \"${SERVER_PORT}\" &\r\nwine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\" &\r\n{ chmod +x cod-rcon; sleep 30; echo \"Running RCON client\"; .\/cod-rcon -O -P \"{{SERVER_PORT}}\" -p {{RCON_PASSWORD}}; }",
+    "config": {
+        "files": "{\r\n    \"zone\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_cp.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"start\": \"------- Game Initialization -------\",\r\n    \"done\": \"---------- Server ----------\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/${CONFIG_F}\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"${BOIII}\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Install rcon client\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/cod-rcon\/releases\/latest\/download\/cod-rcon-x86_64-unknown-linux-gnu.tar.gz\" -o cod-rcon.tar.gz\r\ntar -xzvf cod-rcon.tar.gz -C \"${install_dir}\"\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/iw4m-log-server\/releases\/latest\/download\/iw4m-log-server-x86_64-unknown-linux-gnu.tar.gz\" -o main.tar.gz\r\ntar -xzvf main.tar.gz -C \"${install_dir}\"\r\nrm main.tar.gz\r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer cod-rcon.tar.gz\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} == 1 ]\r\nthen\r\n# Create the folders\r\nessential_dir=\"${install_dir}\/essential\"\r\nzone_dir=\"${install_dir}\/zone\"\r\nmkdir -p $essential_dir\r\n\r\n# Copy needed files over\r\ncp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n# Transfer files over and delete essential dir\r\nrm -r ${zone_dir}\/*\r\ncp -r $essential_dir\/* ${zone_dir}\r\nrm -r $essential_dir\r\necho \"Slimmed installation\"\r\nfi\r\n\r\n#Installing Zombies\r\necho \"Installing Zombie Zone Files\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/t7.zip\r\nunzip t7.zip\r\nrm t7.zip\r\n\r\n# Done\r\necho \"Done!\"",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Config",
+            "description": "The name of the server config file:\r\nmp -> server.cfg\r\nzm -> server_zm.cfg",
+            "env_variable": "SERVER_CFG",
+            "default_value": "server.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "Mod Folder",
+            "description": "The location of the mod folder",
+            "env_variable": "MOD_FOLDER",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "nullable|string|max:50",
+            "field_type": "text"
+        },
+        {
+            "name": "IW4M Log Server - Enabled",
+            "description": "Installs a log server for IW4M Admin (on installation) and runs it on startup. This does not install IW4M Admin itself, run IW4M Admin on a separate container.",
+            "env_variable": "IW4M",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Password",
+            "description": "This overrides the RCON in your config files",
+            "env_variable": "RCON_PASSWORD",
+            "default_value": "PleaseChangeMe",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Installation Slimming",
+            "description": "Removes all unnecessary files from zone, except the ones that are needed.",
+            "env_variable": "SLIM_ZONE",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Executable Download",
+            "description": "The link to download boiii.exe",
+            "env_variable": "BOIII",
+            "default_value": "https:\/\/github.com\/Ezz-lol\/boiii-free\/releases\/latest\/download\/boiii.exe",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Config Download",
+            "description": "The repository that has the t7 config files",
+            "env_variable": "CONFIG_F",
+            "default_value": "Ezz-lol\/t7-server-config",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
