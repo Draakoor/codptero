@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-08-11T21:06:25+02:00",
+    "exported_at": "2023-11-13T14:36:13+01:00",
     "name": "Plutonium WAW",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
@@ -13,7 +13,7 @@
         "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/garycraft\/ptero-plutonium:latest"
     },
     "file_denylist": [],
-    "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/ -dedicated +start_map_rotate +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +set sv_config {{PLUTOCFG}}",
+    "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/ -dedicated +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +exec {{PLUTOCFG}} +set zombiemode {{ZOMBIE}} +map_rotate",
     "config": {
         "files": "{\r\n    \"Plutonium\/T4Server.sh\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"PORT\": \"{{server.build.default.port}}\",\r\n            \"KEY\": \"{{server.build.env.PLUTOKEY}}\",\r\n            \"MODE\": \"{{server.build.env.PLUTOMODE}}\",\r\n            \"PAT\": \"\/home\/container\/\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
@@ -60,12 +60,22 @@
         },
         {
             "name": "Server Mode",
-            "description": "Game Mode\r\n(Multiplayer  -> t6mp)\r\n(Zombie\/Coop -> t4sp, for zombies add +set zombiemode 1 to start arguments)",
+            "description": "Game Mode\r\n(Multiplayer  -> t4mp)\r\n(Zombie\/Coop -> t4sp, for zombies add +set zombiemode 1 to start arguments)",
             "env_variable": "PLUTOMODE",
             "default_value": "t4mp",
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|string|in:t4sp,t4mp",
+            "field_type": "text"
+        },
+        {
+            "name": "Zombie Mode Enabled",
+            "description": "Server needs to run in Coopmode (see Servermode t4sp)",
+            "env_variable": "ZOMBIE",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
             "field_type": "text"
         }
     ]
