@@ -40,6 +40,7 @@ jobs:
          - ptero-dotnet
          - ptero-plutonium
          - ptero-iw4madmin
+         - ptero-iw4madmindotnet8
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
