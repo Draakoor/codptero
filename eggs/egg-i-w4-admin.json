@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.06.10.2-prerelease\/IW4MAdmin-2023.06.10.2.zip\r\ncd \/mnt\/server && unzip -o IW4MAdmin-2023.06.10.2.zip\r\ncd \/mnt\/server && rm IW4MAdmin-2023.06.10.2.zip",
+            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2024.2.5.6-prerelease\/IW4MAdmin-2024.2.5.6.zip\r\ncd \/mnt\/server && unzip -o IW4MAdmin-2023.06.10.2.zip\r\ncd \/mnt\/server && rm IW4MAdmin-2023.06.10.2.zip",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
