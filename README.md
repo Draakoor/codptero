@@ -2,12 +2,19 @@
 Call of Duty Eggs for Pterodactyl Webpanel     
 Available Eggs at the moment:    
 Alterware (MW2, Ghosts, AW, BO3)
+
 Plutonium (BO2, BO1, MW3, WAW)
+
 Call of Duty 4x
+
 Call of Duty MWR H1-Mod
+
 Call of Duty 2
+
 Call of Duty United Offensive
+
 EZZ Boiii (Black Ops 3)
+
 
 How to use IW4MAdmin in Pterodactyl:  
 Create a new mount and assign it to the call of duty eggs and the iw4madmin egg, be sure to that the mount is writeable otherwhise it will not work.   
