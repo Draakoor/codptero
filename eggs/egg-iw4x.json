@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-02-17T00:47:22+01:00",
+    "exported_at": "2024-02-17T01:44:19+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
@@ -13,7 +13,7 @@
         "ghcr.io\/draakoor\/codptero\/ptero-wine:latest": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
     },
     "file_denylist": [],
-    "startup": "wine iw4x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec server.cfg +party_enable 0 +sv_maxclients 20 +map_rotate && .\/alterware-launcher --update iw4x",
+    "startup": "wine iw4x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec server.cfg +party_enable 0 +sv_maxclients 20 +map_rotate && .\/alterware-launcher --bonus --update iw4x",
     "config": {
         "files": "{\r\n    \"userraw\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password {{server.build.env.ADMIN_PASSWORD}}\",\r\n            \"sv_hostname\": \"sv_hostname {{server.build.env.SERVER_NAME}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install IW4x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading MW2 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/iw4x.zip\r\ncd \/mnt\/server && unzip -o iw4x.zip\r\necho \"### Dowloading Server CFGs ###\"\r\ncd \/mnt\/server && wget https:\/\/git.alterware.dev\/AlterWare\/IW4ServerConfigsLinux\/archive\/main.zip\r\ncd \/mnt\/server && unzip -o main.zip\r\ncd \/mnt\/server && rm iw4x.zip && rm main.zip\r\necho \"### NEW: Downloading Alterware launcher ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/mxve\/alterware-launcher\/releases\/latest | grep \"browser_download_url.*.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nalterware=$(find alterware-launcher*)\r\ncd \/mnt\/server && tar -xvf ${alterware}\r\ncd \/mnt\/server && rm ${alterware}\r\necho \"### NEW: Running Alterware launcher to update files ###\"\r\ncd \/mnt\/server\r\n.\/alterware-launcher --update iw4x",
+            "script": "echo \"Install IW4x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading MW2 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/iw4x.zip\r\ncd \/mnt\/server && unzip -o iw4x.zip\r\necho \"### Dowloading Server CFGs ###\"\r\ncd \/mnt\/server && wget https:\/\/git.alterware.dev\/AlterWare\/IW4ServerConfigsLinux\/archive\/main.zip\r\ncd \/mnt\/server && unzip -o main.zip\r\ncd \/mnt\/server && rm iw4x.zip && rm main.zip\r\necho \"### NEW: Downloading Alterware launcher ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/mxve\/alterware-launcher\/releases\/latest | grep \"browser_download_url.*.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nalterware=$(find alterware-launcher*)\r\ncd \/mnt\/server && tar -xvf ${alterware}\r\ncd \/mnt\/server && rm ${alterware}\r\necho \"### NEW: Running Alterware launcher to update files ###\"\r\ncd \/mnt\/server\r\n.\/alterware-launcher --update --bonus iw4x",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }

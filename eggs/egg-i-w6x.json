@@ -4,16 +4,16 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-08-11T21:06:28+02:00",
+    "exported_at": "2024-02-17T01:44:12+01:00",
     "name": "IW6x",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
     "features": null,
     "docker_images": {
-        "quay.io\/parkervcp\/pterodactyl-images:debian_wine": "quay.io\/parkervcp\/pterodactyl-images:debian_wine"
+        "ghcr.io\/draakoor\/codptero\/ptero-wine:latest": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
     },
     "file_denylist": [],
-    "startup": "wine iw6x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec {{SERVERCFG}} +map_rotate",
+    "startup": "wine iw6x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec {{SERVERCFG}} +map_rotate && .\/alterware-launcher --bonus --update iw6-mod",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install IW6x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading IW6X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/iw6x.zip\r\ncd \/mnt\/server && unzip -o iw6x.zip\r\ncd \/mnt\/server && rm iw6x.zip",
+            "script": "echo \"Install IW6x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading IW6X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/iw6x.zip\r\ncd \/mnt\/server && unzip -o iw6x.zip\r\ncd \/mnt\/server && rm iw6x.zip\r\n\r\necho \"### NEW: Downloading Alterware launcher ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/mxve\/alterware-launcher\/releases\/latest | grep \"browser_download_url.*.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nalterware=$(find alterware-launcher*)\r\ncd \/mnt\/server && tar -xvf ${alterware}\r\ncd \/mnt\/server && rm ${alterware}\r\necho \"### NEW: Running Alterware launcher to update files ###\"\r\ncd \/mnt\/server\r\n.\/alterware-launcher --update --bonus iw6-mod",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
