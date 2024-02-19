@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install S1X debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading S1X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/h1.zip\r\ncd \/mnt\/server && unzip -o h1.zip\r\ncd \/mnt\/server && rm h1.zip",
+            "script": "echo \"Install H1-Mod debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading S1X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/h1.zip\r\ncd \/mnt\/server && unzip -o h1.zip\r\ncd \/mnt\/server && rm h1.zip",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
