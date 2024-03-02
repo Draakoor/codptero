@@ -11,10 +11,20 @@ EZZ Boiii (Black Ops 3)
 
 
 How to use IW4MAdmin in Pterodactyl:  
-Create a new mount and assign it to the call of duty eggs and the iw4madmin egg, be sure to that the mount is writeable otherwhise it will not work.   
-Use +set fs_homepath to set the new log dir for the call of duty server (example: +set fs_homepath "z:\codlogs\mw2" ; z: is the linux filesystem ; codlogs is the moung; mw2 is the folder for the gameserver)   
+Mount method:
+Create a new mount and assign it to the call of duty eggs and the iw4madmin egg, be sure to that the mount is writeable otherwhise it will not work.
+Update your wings config and restart.
+Also see here: https://pterodactyl.io/guides/mounts.html
+Use +set fs_homepath to set the new log dir for the call of duty server (example: +set fs_homepath "z:\codlogs\mw2" ; z: is the linux filesystem ; codlogs is the mount; mw2 is the folder for the gameserver)   => Note only required if its not working for g_log does not set drive z: (z: is the linux filesystem)
 Set the correct log path in iw4madmin (for example /codlogs/mw2/logs/games_mp.log ; iw4madmin uses linux path system, because its runed by .net for linux).   
-For configuration for iw4madmin check https://github.com/RaidMax/IW4M-Admin/wiki/Configuration   
+For configuration for iw4madmin check https://github.com/RaidMax/IW4M-Admin/wiki/Configuration
+
+Hardlinks method:
+Create a iw4madmin instance, create a new folder for example gamelogs.
+Connect to your server => navigate with cd to the volume of your cod server.
+Look for your games_mp.log and go the folder.
+create a hardlink to your iw4madmin instance like: games_mp.log /var/lib/pterodactyl/volumes/UUID of IW4MADMIN/gamelogs/logname.log
+Change your iw4madmin config.
     
 For IW4MAdmin use the docker image attach here in this repo or from docker.io docker.io/draakoor/iw4madmin:latest if you want to edit the egg.
 
