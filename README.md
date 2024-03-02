@@ -22,7 +22,7 @@ For configuration for iw4madmin check https://github.com/RaidMax/IW4M-Admin/wiki
 Hardlinks method:
 Create a iw4madmin instance, create a new folder for example gamelogs in that instance.  
 Connect to your machine via ssh => navigate with cd to the volume (should be in /var/lib/pterodactyl/volumes) of your cod server.  
-Look for your games_mp.log and go the folder.  
+Look for your games_mp.log and go the folder.  (use "find" if you dont know where it is)
 create a hardlink to your iw4madmin instance like: games_mp.log /var/lib/pterodactyl/volumes/UUID of IW4MADMIN/gamelogs/logname.log  
 Change your iw4madmin config to the new logpath for example /home/container/codlogs/t6mp.log  
     
