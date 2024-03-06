@@ -1,0 +1,17 @@
+FROM ghcr.io/parkervcp/yolks:debian
+
+RUN dpkg --add-architecture i386
+RUN apt-get update
+RUN apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 -y
+RUN apt-get install wget tar unzip
+RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-mi>
+RUN dpkg -i packages-microsoft-prod.deb
+RUN rm packages-microsoft-prod.deb
+RUN apt-get update
+RUN apt-get install -y dotnet-sdk-6.0
+RUN apt-get install -y aspnetcore-runtime-6.0
+RUN apt-get install -y dotnet-runtime-6.0
+RUN wget https://wellisch-itservice.de/libcxa.so.1
+RUN mv libcxa.so.1 /usr/lib
+RUN chmod a+r /usr/lib/libcxa.so.1
+RUN apt-get install zlib1g:i386 curl:i386 -y
