@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-06T00:57:29+01:00",
+    "exported_at": "2024-03-06T17:43:00+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
@@ -13,7 +13,7 @@
         "ghcr.io\/draakoor\/codptero\/ptero-wine:latest": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
     },
     "file_denylist": [],
-    "startup": "wine iw4x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec server.cfg +party_enable 0 +sv_maxclients 20 +map_rotate && .\/alterware-launcher --bonus --update iw4x",
+    "startup": "wine iw4x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec server.cfg  +set fs_game {{MOD}} +party_enable 0 +sv_maxclients 20 +map_rotate && .\/alterware-launcher --bonus --update iw4x",
     "config": {
         "files": "{\r\n    \"userraw\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password {{server.build.env.ADMIN_PASSWORD}}\",\r\n            \"sv_hostname\": \"sv_hostname {{server.build.env.SERVER_NAME}}\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -56,6 +56,16 @@
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Mod",
+            "description": "Launch mod for example \"mods\/iSnipe\"",
+            "env_variable": "MOD",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:50",
             "field_type": "text"
         }
     ]

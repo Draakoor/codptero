@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-06T15:11:47+01:00",
+    "exported_at": "2024-03-06T17:41:02+01:00",
     "name": "Moviebattles 2 (Jedi Academy)",
     "author": "dominique@wellisch-itservice.de",
     "description": "Dedicated Server for moviebattles 2",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Installling JKA Base\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/base.zip\r\nunzip base.zip\r\nrm base.zip\r\n\r\necho \"Installing OpenJK\"\r\ncurl https:\/\/api.github.com\/repos\/jacoders\/openjk\/releases\/latest | grep \"browser_download_url.*OpenJK-linux-x86_64.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nopenjk=$(find OpenJK-linux*)\r\ncd \/mnt\/server && tar -xvf ${openjk} && \r\nrm ${openjk}\r\n\r\necho \"Installing MB2 Updater\"\r\nwget https:\/\/www.moviebattles.org\/download\/MBII_CLI_Updater.zip\r\nunzip MBII_CLI_Updater.zip\r\nrm MBII_CLI_Updater.zip\r\nwget ${SERVER_DOWNLOAD} -v -O mod.zip\r\nunzip mod.zip\r\nrm mod.zip\r\ncd \/mnt\/server\/MBII && mv -f jampgamei386.so jampgamei386.jamp.so\r\ncd \/mnt\/server\/MBII && cp jampgamei386.nopp.so jampgamei386.so\r\nchmod +x mbiided.i386\r\nchmod +x linuxjampded\r\n\r\necho \"Copying default config\"\r\ncp \/mnt\/server\/MBII\/server_config_default.cfg \/mnt\/server\/MBII\/server.cfg",
+            "script": "echo \"Installling JKA Base\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/base.zip\r\nunzip base.zip\r\nrm base.zip\r\n\r\necho \"Installing OpenJK\"\r\ncurl https:\/\/api.github.com\/repos\/jacoders\/openjk\/releases\/latest | grep \"browser_download_url.*OpenJK-linux-x86_64.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nopenjk=$(find OpenJK-linux*)\r\ncd \/mnt\/server && tar -xvf ${openjk} && \r\nrm ${openjk}\r\n\r\necho \"Installing MB2 Updater\"\r\nwget https:\/\/www.moviebattles.org\/download\/MBII_CLI_Updater.zip\r\nunzip MBII_CLI_Updater.zip\r\nrm MBII_CLI_Updater.zip\r\nwget ${SERVER_DOWNLOAD} -v -O mod.zip\r\nunzip mod.zip\r\nrm mod.zip\r\ncd \/mnt\/server\/MBII && mv -f jampgamei386.so jampgamei386.jamp.so\r\ncd \/mnt\/server\/MBII && cp jampgamei386.nopp.so jampgamei386.so\r\nchmod +x mbiided.i386\r\nchmod +x linuxjampded\r\n\r\necho \"Copying default config\"\r\ncp \/mnt\/server\/MBII\/server_config_default.cfg \/mnt\/server\/MBII\/server.cfg\r\n\r\necho \"Installing RTV\/RTM\"\r\nwget https:\/\/www.moviebattles.org\/download\/RTVRTM.zip\r\nunzip RTVRTM.zip\r\nmv Linux\/* .\r\nrm -R Linux\/\r\nrm RTVRTM.zip\r\nchmod 755 Linux\/rtvrtm.py\r\nrm LICENSE.txt",
             "container": "draakoor\/jka:latest",
             "entrypoint": "bash"
         }

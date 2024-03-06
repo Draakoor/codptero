@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-03-06T17:40:56+01:00",
+    "name": "MB2 RTV\/RTM",
+    "author": "dominique@wellisch-itservice.de",
+    "description": null,
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/parkervcp\/yolks:python_2.7": "ghcr.io\/parkervcp\/yolks:python_2.7"
+    },
+    "file_denylist": [],
+    "startup": "python rtvrtm.py -t 10",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "apt update\r\napt install wget unzip -y\r\ncd \/mnt\/server\r\nwget https:\/\/www.moviebattles.org\/download\/RTVRTM.zip\r\nunzip RTVRTM.zip\r\nmv Linux\/* .\r\nrm -R Linux\/\r\nrm -R Windows\/\r\nrm RTVRTM.zip\r\nchmod 755 rtvrtm.py",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
