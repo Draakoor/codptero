@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-06T17:41:02+01:00",
+    "exported_at": "2024-03-06T18:10:09+01:00",
     "name": "Moviebattles 2 (Jedi Academy)",
     "author": "dominique@wellisch-itservice.de",
     "description": "Dedicated Server for moviebattles 2",
@@ -13,7 +13,7 @@
         "draakoor\/jka:latest": "draakoor\/jka:latest"
     },
     "file_denylist": [],
-    "startup": ".\/linuxjampded +set fs_game MBII +set dedicated 2 +exec server.cfg +set net_port {{SERVER_PORT}}",
+    "startup": ".\/mbiided.i386 +set dedicated 2 +set net_port {{SERVER_PORT}} +exec server.cfg &python Linux\/rtvrtm.py",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
