@@ -1,0 +1,42 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-03-06T15:11:47+01:00",
+    "name": "Moviebattles 2 (Jedi Academy)",
+    "author": "dominique@wellisch-itservice.de",
+    "description": "Dedicated Server for moviebattles 2",
+    "features": null,
+    "docker_images": {
+        "draakoor\/jka:latest": "draakoor\/jka:latest"
+    },
+    "file_denylist": [],
+    "startup": ".\/linuxjampded +set fs_game MBII +set dedicated 2 +exec server.cfg +set net_port {{SERVER_PORT}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "echo \"Installling JKA Base\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/base.zip\r\nunzip base.zip\r\nrm base.zip\r\n\r\necho \"Installing OpenJK\"\r\ncurl https:\/\/api.github.com\/repos\/jacoders\/openjk\/releases\/latest | grep \"browser_download_url.*OpenJK-linux-x86_64.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nopenjk=$(find OpenJK-linux*)\r\ncd \/mnt\/server && tar -xvf ${openjk} && \r\nrm ${openjk}\r\n\r\necho \"Installing MB2 Updater\"\r\nwget https:\/\/www.moviebattles.org\/download\/MBII_CLI_Updater.zip\r\nunzip MBII_CLI_Updater.zip\r\nrm MBII_CLI_Updater.zip\r\nwget ${SERVER_DOWNLOAD} -v -O mod.zip\r\nunzip mod.zip\r\nrm mod.zip\r\ncd \/mnt\/server\/MBII && mv -f jampgamei386.so jampgamei386.jamp.so\r\ncd \/mnt\/server\/MBII && cp jampgamei386.nopp.so jampgamei386.so\r\nchmod +x mbiided.i386\r\nchmod +x linuxjampded\r\n\r\necho \"Copying default config\"\r\ncp \/mnt\/server\/MBII\/server_config_default.cfg \/mnt\/server\/MBII\/server.cfg",
+            "container": "draakoor\/jka:latest",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Download File",
+            "description": "Download for the mod",
+            "env_variable": "SERVER_DOWNLOAD",
+            "default_value": "https:\/\/sjc1.dl.dbolical.com\/dl\/2023\/12\/19\/MovieBattlesII_FULL_V1.10.0.1.zip?st=o85GVlMZjYmuCUD79YHwFg==&e=1709762650",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
+            "field_type": "text"
+        }
+    ]
+}
