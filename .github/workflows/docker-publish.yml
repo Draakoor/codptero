@@ -40,6 +40,7 @@ jobs:
          - ptero-dotnet
          - ptero-plutonium
          - ptero-iw4madmin
+         - ptero-plutonium-logserver
          - ptero-jka
     steps:
       - name: Checkout repository
