@@ -1,0 +1,23 @@
+# ----------------------------------
+# Pterodactyl Plutonium Egg Dockerfile
+# Environment: Ubuntu 20.04
+# Minimum Panel Version: 1.0.0
+# ----------------------------------
+FROM ghcr.io/draakoor/codptero/ptero-wine:latest
+
+LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
+
+USER root
+
+COPY checkupdater.sh /checkupdater.sh
+#Make sure the script is executable by anyone
+RUN chmod ugo+x /checkupdater.sh
+
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container/
+
+COPY entrypoint.sh /entrypoint.sh
+
+CMD ["/bin/bash", "/entrypoint.sh"]
