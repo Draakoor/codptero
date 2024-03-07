@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-06T17:43:00+01:00",
+    "exported_at": "2024-03-07T23:35:00+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install IW4x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading MW2 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ ${SERVER_DOWNLOAD}\r\ncd \/mnt\/server && unzip -o iw4x.zip\r\necho \"### Dowloading Server CFGs ###\"\r\ncd \/mnt\/server && git clone https:\/\/git.alterware.dev\/AlterWare\/IW4ServerConfigsLinux.git\r\ncd \/mnt\/server && mv IW4ServerConfigsLinux\/* .\r\ncd \/mnt\/server && rm -R IW4ServerConfigsLinux\r\necho \"### NEW: Downloading Alterware launcher ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/mxve\/alterware-launcher\/releases\/latest | grep \"browser_download_url.*x86_64-unknown-linux-gnu.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nalterware=$(find alterware-launcher*)\r\ncd \/mnt\/server && tar -xvf ${alterware}\r\ncd \/mnt\/server && rm ${alterware}\r\ncd \/mnt\/server && chmod 755 ${alterware}\r\necho \"### NEW: Running Alterware launcher to update files ###\"\r\ncd \/mnt\/server\r\n.\/alterware-launcher --update --bonus iw4x",
+            "script": "echo \"Install IW4x debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading MW2 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ ${SERVER_DOWNLOAD}\r\ncd \/mnt\/server && unzip -o iw4x.zip\r\necho \"### Dowloading Server CFGs ###\"\r\ncd \/mnt\/server && git clone https:\/\/git.alterware.dev\/AlterWare\/IW4ServerConfigsLinux.git\r\ncd \/mnt\/server && mv IW4ServerConfigsLinux\/* .\r\ncd \/mnt\/server && rm -R IW4ServerConfigsLinux\r\necho \"### NEW: Downloading Alterware launcher ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/mxve\/alterware-launcher\/releases\/latest | grep \"browser_download_url.*x86_64-unknown-linux-gnu.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nalterware=$(find alterware-launcher*)\r\ncd \/mnt\/server && tar -xvf ${alterware}\r\ncd \/mnt\/server && rm ${alterware}\r\ncd \/mnt\/server && chmod 755 alterware-launcher\r\necho \"### NEW: Running Alterware launcher to update files ###\"\r\ncd \/mnt\/server\r\n.\/alterware-launcher --update --bonus iw4x",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
