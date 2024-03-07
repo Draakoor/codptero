@@ -30,4 +30,4 @@ MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g'
 echo "Running ${MODIFIED_STARTUP}"
 
 # Run the Server
-( cd /home/container/Plutonium && exec xvfb-run wine ${MODIFIED_STARTUP} )
+( /home/container/iw4m-log-server -p {{SERVER_PORT}} && cd /home/container/Plutonium && exec xvfb-run wine ${MODIFIED_STARTUP} )
