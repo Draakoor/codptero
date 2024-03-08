@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-08T01:39:42+01:00",
+    "exported_at": "2024-03-08T02:22:08+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
@@ -62,7 +62,7 @@
             "name": "Mod",
             "description": "Launch mod for example \"mods\/iSnipe\"",
             "env_variable": "MOD",
-            "default_value": "",
+            "default_value": "\"\"",
             "user_viewable": true,
             "user_editable": true,
             "rules": "string|max:50",
