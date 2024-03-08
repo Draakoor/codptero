@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-07T23:35:00+01:00",
+    "exported_at": "2024-03-08T01:39:42+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
@@ -65,7 +65,7 @@
             "default_value": "",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|string|max:50",
+            "rules": "string|max:50",
             "field_type": "text"
         }
     ]
