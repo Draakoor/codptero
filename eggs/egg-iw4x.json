@@ -4,13 +4,14 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-08T02:22:08+01:00",
+    "exported_at": "2024-03-27T01:49:10+01:00",
     "name": "iw4x",
     "author": "dominique@wellisch-itservice.de",
     "description": "MW2",
     "features": null,
     "docker_images": {
-        "ghcr.io\/draakoor\/codptero\/ptero-wine:latest": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
+        "Alpine + Wine (Smallest)": "draakoor\/alpinewine:latest",
+        "Debian + Wine": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
     },
     "file_denylist": [],
     "startup": "wine iw4x.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec server.cfg  +set fs_game {{MOD}} +party_enable 0 +sv_maxclients 20 +map_rotate && .\/alterware-launcher --bonus --update iw4x",

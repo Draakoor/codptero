@@ -4,13 +4,14 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-07T23:35:03+01:00",
+    "exported_at": "2024-03-27T01:51:40+01:00",
     "name": "S1X",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
     "features": null,
     "docker_images": {
-        "ghcr.io\/draakoor\/codptero\/ptero-wine:latest": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
+        "Alpine + Wine (Smallest)": "draakoor\/alpinewine:latest",
+        "Debian + Wine": "ghcr.io\/draakoor\/codptero\/ptero-wine:latest"
     },
     "file_denylist": [],
     "startup": "wine s1-mod.exe -dedicated -stdout +set net_port {{SERVER_PORT}} +exec {{SERVERCFG}} +map_rotate && .\/alterware-launcher --bonus --update s1-mod",
