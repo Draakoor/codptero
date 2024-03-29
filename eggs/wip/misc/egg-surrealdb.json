@@ -1,0 +1,82 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-07-10T19:50:20+01:00",
+    "name": "surrealdb",
+    "author": "stefanukpadd@gmail.com",
+    "description": "Runs a single-node SurrealDB server.",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/stefanuk12\/ptero-debian-surrealdb:dev": "ghcr.io\/stefanuk12\/ptero-debian-surrealdb:dev"
+    },
+    "file_denylist": [],
+    "startup": "strict_arg=\"--strict\"; if [ {{STRICT}} == 0 ]; then strict_arg=\"\"; fi; surreal start {{DB_PATH}} --user {{USERNAME}} --pass {{PASSWORD}} --bind \"0.0.0.0:{{SERVER_PORT}}\" --log {{LOG_LEVEL}} ${strict_arg}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"8888888P'\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/ash\r\nsleep 5\r\necho \"test\"",
+            "container": "ghcr.io\/pterodactyl\/installers:alpine",
+            "entrypoint": "ash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Username",
+            "description": "Sets the master username for the database.",
+            "env_variable": "USERNAME",
+            "default_value": "root",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Password",
+            "description": "Sets the master password for the database.",
+            "env_variable": "PASSWORD",
+            "default_value": "root",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Log Level",
+            "description": "Sets the logging level for the database server.",
+            "env_variable": "LOG_LEVEL",
+            "default_value": "info",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|in:error,warn,info,debug,trace,full",
+            "field_type": "text"
+        },
+        {
+            "name": "Strict",
+            "description": "Sets whether strict mode is enabled on this database instance.",
+            "env_variable": "STRICT",
+            "default_value": "0",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Path",
+            "description": "Sets the database path used for storing data.\r\n\r\nMake sure it matches the following Regex:\r\n(^memory$)|(^file:(\\\/\\\/)*(.+)$)|(^tikv:\\\/\\\/(.+)$)",
+            "env_variable": "DB_PATH",
+            "default_value": "file:\/\/main.db",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}

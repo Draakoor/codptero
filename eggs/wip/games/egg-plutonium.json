@@ -1,0 +1,102 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-05-28T23:17:16+01:00",
+    "name": "Plutonium",
+    "author": "stefanukpadd@gmail.com",
+    "description": "Run a Plutonium Server",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/stefanuk12\/ptero-iw4m:dev": "ghcr.io\/stefanuk12\/ptero-iw4m:dev"
+    },
+    "file_denylist": [],
+    "startup": "cd \"${HOME}\/localappdata\/Plutonium\/\"||exit;wine64 bin\/plutonium-bootstrapper-win32.exe \"${GAMETYPE}${GAMEMODE}\" \"${HOME}\" -dedicated +start_map_rotate +set key \"${KEY}\" +set net_port \"${SERVER_PORT}\" +set sv_config \"${CFG}\" & sleep 30 && { \"${HOME}\/cod-rcon\" -O -P \"${SERVER_PORT}\" -p \"${RCON_PASSWORD}\" & if [ \"${IW4M}\" == 1 ];then \"${HOME}\/iw4m-log-server\" -p \"${SERVER_PORT}\";fi;}",
+    "config": {
+        "files": "{\r\n    \"localappdata\/Plutonium\/storage\/t6\/dedicated.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"localappdata\/Plutonium\/storage\/t6\/dedicated_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\ninstall_dir=\"\/mnt\/server\"\r\ncd $install_dir\r\n\r\n# Install the manager\r\ncurl -Ls \"https:\/\/github.com\/Stefanuk12\/PlutoniumManager\/releases\/latest\/download\/plutonium-manager-x86_64-unknown-linux-gnu.tar.gz\" -o main.tar.gz\r\ntar -xzvf main.tar.gz -C .\r\nrm main.tar.gz\r\n\r\n# Installing the server, if specified\r\nif [ ${INSTALL_SERVER} == 1 ]\r\nthen\r\n    .\/plutonium-manager -s $install_dir -e ${GAMETYPE}\r\nfi\r\n\r\n# Install the server, config, rcon, and plutonium\r\nmkdir -p localappdata\/Plutonium\r\n.\/plutonium-manager -c $install_dir -p \"$install_dir\/plutonium.exe\" -r $install_dir -e ${GAMETYPE}\r\n\r\n# Installs the IW4M log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n    .\/plutonium-manager -l ${install_dir}\r\nfi\r\n\r\n# Installing bootstrapper \/ updater\r\ncurl -Ls https:\/\/github.com\/mxve\/plutonium-updater.rs\/releases\/latest\/download\/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -o latestupdater.tar.gz\r\ntar -xvf latestupdater.tar.gz -C localappdata\/Plutonium\r\nchmod +x localappdata\/Plutonium\/plutonium-updater\r\n.\/localappdata\/Plutonium\/plutonium-updater -d localappdata\/Plutonium\r\n\r\n# Cleanup\r\nrm latestupdater.tar.gz\r\nrm localappdata\/Plutonium\/plutonium-updater",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Game Mode",
+            "description": "The gamemode of the server, either zm (zombies) or mp (multiplayer)",
+            "env_variable": "GAMEMODE",
+            "default_value": "zm",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:2|in:zm,mp",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Key",
+            "description": "Your Server API Key, pasted from https:\/\/platform.plutonium.pw\/serverkeys",
+            "env_variable": "KEY",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Config Name",
+            "description": "Name of the config file the server should use",
+            "env_variable": "CFG",
+            "default_value": "dedicated_zm.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Game Type",
+            "description": "The codename for the game, e.g. t6",
+            "env_variable": "GAMETYPE",
+            "default_value": "t6",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:3|in:t6,t5,t4,iw5",
+            "field_type": "text"
+        },
+        {
+            "name": "IW4M Log Server - Enabled",
+            "description": "Installs a log server for IW4M Admin (on installation) and runs it on startup. This does not install IW4M Admin itself, run IW4M Admin on a separate container.",
+            "env_variable": "IW4M",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "RCON Password",
+            "description": "",
+            "env_variable": "RCON_PASSWORD",
+            "default_value": "pleasechangethis",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Install Server Files",
+            "description": "This will install the server zone files. Only disable this if you have a read-only mount with the files already. It is highly recommended you use a mount to save a lot of storage space.",
+            "env_variable": "INSTALL_SERVER",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2023-06-09T20:45:55+01:00",
+    "name": "IW4M Admin",
+    "author": "stefanukpadd@gmail.com",
+    "description": "Manage many Plutonium, X-Labs, and BOIII servers with one IW4MA instance! To connect to the web front, use the panel IP:Port or the ManualWebfrontUrl within IW4MAdminSettings.json\r\n\r\nNote: You need to manually add and configure each server to IW4MAdminSettings.json",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/stefanuk12\/ptero-iw4m:dev": "ghcr.io\/stefanuk12\/ptero-iw4m:dev"
+    },
+    "file_denylist": [],
+    "startup": "export DOTNET_CLI_TELEMETRY_OPTOUT=1 && bash UpdateIW4MAdmin.sh -s && dotnet .\/Lib\/IW4MAdmin.dll",
+    "config": {
+        "files": "{\r\n    \"Configuration\/IW4MAdminSettings.json\": {\r\n        \"parser\": \"json\",\r\n        \"find\": {\r\n            \"EnableWebFront\": true,\r\n            \"WebfrontBindUrl\": \"http:\/\/0.0.0.0:{{server.build.default.port}}\",\r\n            \"ManualWebfrontUrl\": \"http:\/\/{{server.build.default.ip}}:{{server.build.default.port}}\"\r\n        }\r\n    }\r\n}",
+        "startup": "{\r\n    \"start\": \"Now listening on:\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# Vars\r\ninstall_dir=\"\/mnt\/server\"\r\ncd $install_dir\r\n\r\n# Download IW4M\r\ncurl -Ls \"https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2023.05.15.1-prerelease\/IW4MAdmin-2023.05.15.1.zip\" -o main.zip\r\nunzip -o main.zip\r\nrm main.zip\r\n\r\n# Download the config\r\ncurl -Ls \"https:\/\/cdn.discordapp.com\/attachments\/749611171216359474\/1108504949836496996\/Configuration.zip\" -o main_iw4m.zip\r\nunzip -o main_iw4m.zip -d Configuration\r\nrm main_iw4m.zip",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
