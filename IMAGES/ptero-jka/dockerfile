@@ -14,4 +14,4 @@ RUN apt-get install -y dotnet-runtime-6.0
 RUN wget https://wellisch-itservice.de/libcxa.so.1
 RUN mv libcxa.so.1 /usr/lib
 RUN chmod a+r /usr/lib/libcxa.so.1
-RUN apt-get install zlib1g:i386 curl:i386 python screen -y
+RUN apt-get install zlib1g curl python screen -y
