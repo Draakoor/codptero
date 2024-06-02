@@ -4,13 +4,13 @@
         "version": "PTDL_v2",
         "update_url": "https:\/\/raw.githubusercontent.com\/GaryCraft\/ptero-plutonium\/main\/EGGS\/egg-plutonium-t6.json"
     },
-    "exported_at": "2023-06-22T16:15:28+02:00",
+    "exported_at": "2024-06-02T12:20:45+02:00",
     "name": "Plutonium BO2",
     "author": "atom@our-space.xyz",
     "description": null,
     "features": null,
     "docker_images": {
-        "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest"
+        "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest": "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest"
     },
     "file_denylist": [],
     "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/Server\/{{PLUTOMODEDIR}}\/ -dedicated +start_map_rotate +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +set sv_config {{PLUTOCFG}}",
