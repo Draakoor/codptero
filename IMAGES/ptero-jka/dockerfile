@@ -4,7 +4,8 @@ RUN dpkg --add-architecture i386
 RUN apt-get update
 RUN apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 -y
 RUN apt-get install wget tar unzip -y
-RUN apt-get install zlib1g curl python screen -y
+RUN apt-get install zlib1g curl python3 screen -y
+RUN python -m pip install --upgrade pip
 RUN wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 RUN dpkg -i packages-microsoft-prod.deb
 RUN rm packages-microsoft-prod.deb
