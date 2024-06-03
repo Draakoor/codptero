@@ -5,7 +5,7 @@
 # ----------------------------------
 FROM ghcr.io/garycraft/ptero-wine:dev
 
-LABEL maintainer="GaryCraft@SpaceProject <garycraft@our-space.xyz>"
+LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
 USER root
 
