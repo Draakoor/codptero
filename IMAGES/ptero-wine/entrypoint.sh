@@ -4,7 +4,10 @@ cd /home/container
 # Output Current Wine Version
 wine --version
 
-# If .wine directory doesn't exist, copy backup
+#Ensure /home/container is owned by container
+sudo chown -R container:container /home/container
+
+# If .wine directory doesn't exist, initialize
 if [ ! -d /home/container/.wine ]; 
 then echo "Wineprefix not found, initialiizing wine" && winecfg && /usr/sbin/winetricks
 echo "Configured Succesfully"
