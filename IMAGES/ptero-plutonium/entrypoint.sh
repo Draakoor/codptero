@@ -1,30 +1,33 @@
 #!/bin/bash
 cd /home/container
 
-# Make internal Docker IP address available to processes.
-INTERNAL_IP=$(ip route get 1 | awk '{print $(NF-2);exit}')
-export INTERNAL_IP
+# Use checkupdater.sh to download the latest updater and run it
+/checkupdater.sh
 
-# Installing bootstrapper / updater
-wget https://github.com/mxve/plutonium-updater.rs/releases/latest/download/plutonium-updater-x86_64-unknown-linux-gnu.tar.gz -O latestupdater.tar.gz -q --show-progress
-tar -xvf latestupdater.tar.gz -C localappdata/Plutonium
-rm latestupdater.tar.gz
-chmod +x localappdata/Plutonium/plutonium-updater
-./localappdata/Plutonium/plutonium-updater -d localappdata/Plutonium
-rm localappdata/Plutonium/plutonium-updater
+# Output Current Wine Version
+wine --version
 
-# IW4M Admin
-if [ ${IW4MA_ENABLED} ]; then 
-    ( cd /home/container/iw4madmin && dotnet Lib/IW4MAdmin.dll & )
+if [ ! -d /home/container/.wine ]; 
+then echo "Wineprefix not found, initialiizing wine" && /usr/sbin/winetricks
+echo "Configured Succesfully"
 fi;
 
-# RCON
-npm install rcon-cmd
-(node node_modules/rcon-cmd/index.js connect -udp -p ${SERVER_PORT} -pw ${RCON_PASSWORD} -c false & )
+# Create Shortcuts for zone files
+if [ ! -e /home/container/Server/Zombie/zone ];
+then ln -s /home/container/Server/zone /home/container/Server/Zombie/zone
+fi;
+if [ ! -e /home/container/Server/Multiplayer/zone ];
+then ln -s /home/container/Server/zone /home/container/Server/Multiplayer/zone
+fi;
+
+# Setup Virtual Screen 
+# Xvfb :0 -screen 0 1024x768x16 -nolisten unix
+# export DISPLAY=:0.0
+export WINEDEBUG=fixme-all
 
 # Replace Startup Variables
-MODIFIED_STARTUP=$(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')
-echo ":/home/container$ ${MODIFIED_STARTUP}"
+MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+echo "Running ${MODIFIED_STARTUP}"
 
 # Run the Server
-eval ${MODIFIED_STARTUP}
+( cd /home/container/Plutonium && exec xvfb-run wine ${MODIFIED_STARTUP} )
