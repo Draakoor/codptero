@@ -9,7 +9,7 @@ LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
 ENV WINEDEBUG=fixme-all
 ENV WINEARCH=win64
-ENV WINEPREFIX=/home/container/wine/.wine
+ENV WINEPREFIX=/home/container/.wine
 
 COPY installwine.sh /installwine.sh
 RUN chmod +x /installwine.sh 
