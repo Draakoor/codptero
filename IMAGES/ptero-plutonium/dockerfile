@@ -3,15 +3,17 @@
 # Environment: Ubuntu 20.04
 # Minimum Panel Version: 1.0.0
 # ----------------------------------
-FROM ghcr.io/draakoor/codptero/ptero-wine:latest
+FROM ghcr.io/garycraft/ptero-wine:dev
 
-LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
+LABEL maintainer="GaryCraft@SpaceProject <garycraft@our-space.xyz>"
 
 USER root
 
 COPY checkupdater.sh /checkupdater.sh
 #Make sure the script is executable by anyone
 RUN chmod ugo+x /checkupdater.sh
+# Ensure /home/container is owned by container
+RUN chown -R container:container /home/container
 
 USER container
 ENV  USER=container HOME=/home/container
