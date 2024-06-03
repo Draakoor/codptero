@@ -3,7 +3,7 @@
 # Environment: Ubuntu 20.04
 # Minimum Panel Version: 1.0.0
 # ----------------------------------
-FROM ghcr.io/garycraft/ptero-wine:dev
+FROM ghcr.io/draakoor/codptero/ptero-wine:latest
 
 LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
