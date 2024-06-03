@@ -7,6 +7,9 @@ cd /home/container
 # Output Current Wine Version
 wine --version
 
+#Ensure /home/container is owned by container
+sudo chown -R container:container /home/container
+
 if [ ! -d /home/container/.wine ]; 
 then echo "Wineprefix not found, initialiizing wine" && /usr/sbin/winetricks
 echo "Configured Succesfully"
