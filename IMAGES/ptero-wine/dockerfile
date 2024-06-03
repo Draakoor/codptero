@@ -5,17 +5,21 @@
 # ----------------------------------
 FROM ubuntu:focal
 
-LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
+LABEL maintainer="GaryCraft@SpaceProject <garycraft@our-space.xyz>"
 
 ENV WINEDEBUG=fixme-all
 ENV WINEARCH=win64
-ENV WINEPREFIX=/home/container/.wine
+ENV WINEPREFIX=/home/container/wine/.wine
 
 COPY installwine.sh /installwine.sh
 RUN chmod +x /installwine.sh 
 RUN /installwine.sh && rm /installwine.sh
 
 RUN adduser --disabled-password --gecos "" --home /home/container container
+
+# Ensure /home/container is owned by container
+RUN chown -R container:container /home/container
+RUN echo 'container ALL= NOPASSWD:/bin/chown -R container\:container /home/container' | tee -a /etc/sudoers
 USER container
 ENV  USER=container HOME=/home/container
 
