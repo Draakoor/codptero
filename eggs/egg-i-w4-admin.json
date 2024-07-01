@@ -4,25 +4,26 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-02-17T01:36:17+01:00",
+    "exported_at": "2024-07-01T10:08:33+02:00",
     "name": "IW4Admin",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
     "features": null,
     "docker_images": {
+        "draakoor\/ptero-iw4m:latest": "draakoor\/ptero-iw4m:latest",
         "docker.io\/draakoor\/iw4madmin:latest": "docker.io\/draakoor\/iw4madmin:latest"
     },
     "file_denylist": [],
-    "startup": "dotnet Lib\/IW4MAdmin.dll",
+    "startup": "export DOTNET_CLI_TELEMETRY_OPTOUT=1 && bash UpdateIW4MAdmin.sh -s && dotnet Lib\/IW4MAdmin.dll",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"IW4MAdmin is up to date\"\r\n}",
         "logs": "{}",
-        "stop": "^c"
+        "stop": "^^c"
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/RaidMax\/IW4M-Admin\/releases\/latest | grep \"browser_download_url.*.zip\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\niw4madmin=$(find IW4MAdmin-*)\r\ncd \/mnt\/server && unzip ${iw4madmin}\r\ncd \/mnt\/server && rm ${iw4madmin}",
+            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/RaidMax\/IW4M-Admin\/releases\/latest | grep \"browser_download_url.*.zip\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\niw4madmin=$(find IW4MAdmin-*)\r\ncd \/mnt\/server && tar -xvf ${iw4madmin}\r\ncd \/mnt\/server && rm ${iw4madmin}",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
