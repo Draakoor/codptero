@@ -39,7 +39,6 @@ jobs:
          - ptero-wine
          - ptero-dotnet
          - ptero-plutonium
-         - ptero-iw4m
          - ptero-plutonium-logserver
          - ptero-jka
     steps:
