@@ -11,7 +11,7 @@ RUN apt-get update; \
     apt-get install -y dotnet-sdk-8.0 aspnetcore-runtime-8.0 dotnet-sdk-6.0 aspnetcore-runtime-6.0 dotnet-sdk-3.1 aspnetcore-runtime-3.1 
 
 # Installing other dependencies
-RUN apt-get install unzip
+RUN apt-get install unzip curl
 
 # Setting up container user
 USER container
