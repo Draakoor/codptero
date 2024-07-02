@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-07-01T10:08:33+02:00",
+    "exported_at": "2024-07-02T18:00:05+02:00",
     "name": "IW4Admin",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
@@ -14,7 +14,7 @@
         "docker.io\/draakoor\/iw4madmin:latest": "docker.io\/draakoor\/iw4madmin:latest"
     },
     "file_denylist": [],
-    "startup": "export DOTNET_CLI_TELEMETRY_OPTOUT=1 && bash UpdateIW4MAdmin.sh -s && dotnet Lib\/IW4MAdmin.dll",
+    "startup": "export DOTNET_CLI_TELEMETRY_OPTOUT=1 && dotnet Lib\/IW4MAdmin.dll",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"IW4MAdmin is up to date\"\r\n}",
