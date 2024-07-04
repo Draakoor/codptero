@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-07-04T17:32:53+02:00",
+    "exported_at": "2024-07-04T19:44:24+02:00",
     "name": "boiii",
     "author": "dominique@wellisch-itservice.de",
     "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
@@ -16,7 +16,7 @@
     "startup": "python3 runserver.py &wine64 boiii.exe -dedicated -headless +set fs_game \"{{MOD_FOLDER}}\" +set net_port \"{{SERVER_PORT}}\" +set logfile 2 +exec \"{{SERVER_CFG}}\"",
     "config": {
         "files": "{\r\n    \"zone\/server.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_cp.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"zone\/server_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"set rcon_password\": \"set rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
-        "startup": "{\r\n    \"start\": \"------- Game Initialization -------\",\r\n    \"done\": \"---------- Server ----------\"\r\n}",
+        "startup": "{\r\n    \"done\": \"GameLogServer.server\"\r\n}",
         "logs": "{}",
         "stop": "^^C"
     },
