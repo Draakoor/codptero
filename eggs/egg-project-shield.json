@@ -1,0 +1,52 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-07-05T13:10:00+02:00",
+    "name": "Project Shield",
+    "author": "dominique@wellisch-itservice.de",
+    "description": "Runs a Black Ops 4 Server",
+    "features": null,
+    "docker_images": {
+        "ghcr.io\/pelican-eggs\/yolks:wine_latest": "ghcr.io\/pelican-eggs\/yolks:wine_latest"
+    },
+    "file_denylist": [],
+    "startup": "wine server.exe",
+    "config": {
+        "files": "{}",
+        "startup": "{}",
+        "logs": "{}",
+        "stop": "^^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#Installing Server\r\necho \"Installing Server\"\r\napt-get update && apt-get install unrar-free -y\r\ncd \/mnt\/server\r\nwget https:\/\/github.com\/bodnjenie14\/DWUPDATES\/releases\/download\/4.1.1.5\/DW.SERVER.rar\r\nunrar DW.SERVER.rar\r\nsed -i \"s\/8080\/${HTTPPORT}\/g\" server-config.json\r\nsed -i \"s\/1234\/${ADMINPORT}\/g\" server-config.json\r\nchmod -R 755 \/mnt\/server*",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "HTTP Port",
+            "description": "Port for HTTP Server",
+            "env_variable": "HTTPPORT",
+            "default_value": "8081",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "AdminPanel Port",
+            "description": "Port for Admin Panel",
+            "env_variable": "ADMINPORT",
+            "default_value": "1234",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        }
+    ]
+}
