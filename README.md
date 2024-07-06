@@ -1,6 +1,7 @@
 # codptero  
-Call of Duty, Quake3 Games and Frostbite Games for Pterodactyl Webpanel     
+Games for Pterodactyl Webpanel     
 Available Eggs at the moment:    
+Sven Coop  
 Battlfield Bad Company 2 (Venice Unleashed Client)  
 Battlefield 3 (Venice Unleashed Client)  
 Alterware (MW2, Ghosts, AW)  
