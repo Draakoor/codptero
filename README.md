@@ -2,7 +2,7 @@
 Call of Duty, Quake3 Games and Frostbite Games for Pterodactyl Webpanel     
 Available Eggs at the moment:    
 Battlfield Bad Company 2 (Venice Unleashed Client)  
-Battlefield 3 (Venice Unleashed Client)
+Battlefield 3 (Venice Unleashed Client)  
 Alterware (MW2, Ghosts, AW)  
 Plutonium (BO2, BO1, MW3, WAW)  
 Call of Duty 4x  
