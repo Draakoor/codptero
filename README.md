@@ -25,4 +25,4 @@ Game Log Server method:
 Use eggs where game log servers is included!
     
 
-Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (
+Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (https://hub.docker.com/u/draakoor)
