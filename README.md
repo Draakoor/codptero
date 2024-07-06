@@ -10,7 +10,7 @@ Call of Duty United Offensive
 T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
 Moviebattles 2 Mod (Jedi Academy) with RTM/RTV
 
-You need to get the gamefiles by yourself!
+You need to get the gamefiles by yourself and own the game/have a lisence!
 
 How to use IW4MAdmin in Pterodactyl:  
 
