@@ -2,6 +2,7 @@
 Games for Pterodactyl Webpanel     
 Available Eggs at the moment:    
 Sven Coop  
+Project Shield (Black Ops 4 Demonware Server)  
 Battlfield Bad Company 2 (Venice Unleashed Client)  
 Battlefield 3 (Venice Unleashed Client)  
 Alterware (MW2, Ghosts, AW)  
