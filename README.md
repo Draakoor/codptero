@@ -7,7 +7,7 @@ Call of Duty 4x
 Call of Duty MWR H1-Mod  
 Call of Duty 2  
 Call of Duty United Offensive  
-T7x/EZZ BOIII (Black Ops 3, please use the t7x egg because boiii is only for testing and should not be used in a productive environment)  
+T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
 Moviebattles 2 Mod (Jedi Academy) with RTM/RTV
 
 You need to get the gamefiles by yourself!
