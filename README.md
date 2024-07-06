@@ -1,5 +1,5 @@
 # codptero  
-Call of Duty Eggs and Quake3 Games for Pterodactyl Webpanel     
+Call of Duty, Quake3 Games and Frostbite Games for Pterodactyl Webpanel     
 Available Eggs at the moment:    
 Battlfield Bad Company 2 (Venice Unleashed Client)  
 Battlefield 3 (Venice Unleashed Client)
