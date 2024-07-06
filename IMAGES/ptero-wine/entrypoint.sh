@@ -5,7 +5,7 @@ cd /home/container
 wine --version
 
 #Ensure /home/container is owned by container
-#chown -R container:container /home/container
+chown -R container:container /home/container
 
 # If .wine directory doesn't exist, initialize
 if [ ! -d /home/container/.wine ]; 
