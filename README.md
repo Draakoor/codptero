@@ -3,8 +3,8 @@ Call of Duty Eggs and Quake3 Games for Pterodactyl Webpanel
 Available Eggs at the moment:    
 Alterware (MW2, Ghosts, AW)  
 Plutonium (BO2, BO1, MW3, WAW)  
-Call of Duty 4x
-Call of Duty MWR H1-Mod  
+Call of Duty 4x  
+Call of Duty MWR H1-Mod (not working at the moment, alternative: https://github.com/dockur/windows)
 Call of Duty 2  
 Call of Duty United Offensive  
 T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
