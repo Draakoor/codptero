@@ -1,6 +1,7 @@
 # codptero  
 Games for Pterodactyl Webpanel     
 Available Eggs at the moment:    
+Titanfall 2 (Northstar Client)  
 Sven Coop  
 Project Shield (Black Ops 4 Demonware Server)  
 Battlefield Bad Company 2 (Venice Unleashed Client)  
