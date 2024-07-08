@@ -1,0 +1,72 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2024-07-08T02:35:15+02:00",
+    "name": "TitanFall 2",
+    "author": "admin@joepena.dev",
+    "description": "--publish 8081:8081\/tcp --publish {{SERVER_PORT}}:{{SERVER_PORT}}\/udp",
+    "features": null,
+    "docker_images": {
+        "docker.io\/draakoor\/northstar:latest": "docker.io\/draakoor\/northstar:latest"
+    },
+    "file_denylist": [],
+    "startup": "\/bin\/bash",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Successfully registered the local server to the master server\"\r\n}",
+        "logs": "{\r\n    \"custom\": true,\r\n    \"location\": \"logs\/latest.log\"\r\n}",
+        "stop": "^C ^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\nmkdir -p \/mnt\/server\/.wine\/drive_c\/windows\/{system32,winsxs,globalization,}\r\nmkdir -p \/mnt\/server\/.wine\/drive_c\/windows\/system32\/{drivers,wbem,spool,Speech}\r\nmkdir -p \/mnt\/server\/.wine\/drive_c\/windows\/system32\/spool\/drivers\/x64\/\r\nmkdir -p \/mnt\/server\/.wine\/drive_c\/windows\/system32\/Speech\/common\/\r\nmkdir -p \/mnt\/server\/.wine\/drive_c\/windows\/globalization\/sorting\r\n\r\n##Setting up Tf2 folder\r\nfor x in \\\r\n    \/mnt\/server\/.wine\/drive_c\/\"Program Files\"\/\"Common Files\"\/System\/*\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/drivers\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/wbem\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/spool\/drivers\/x64\/*\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/Speech\/common\/* \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/winsxs\/*\/* \\\r\n; do \\\r\n    orig=\"\/usr\/lib\/wine\/x86_64-windows\/$(basename \"$x\")\"; \\\r\n    if cmp -s \"$orig\" \"$x\"; then ln -sf \"$orig\" \"$x\"; fi; \\\r\ndone && \\\r\nfor x in \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/globalization\/sorting\/*.nls \\\r\n    \/mnt\/server\/.wine\/drive_c\/windows\/system32\/*.nls \\\r\n; do \\\r\n    orig=\"\/usr\/share\/wine\/nls\/$(basename \"$x\")\"; \\\r\n    if cmp -s \"$orig\" \"$x\"; then ln -sf \"$orig\" \"$x\"; fi; \\\r\n    done",
+            "container": "ghcr.io\/pterodactyl\/installers:debian",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "Server Name",
+            "description": "",
+            "env_variable": "NS_SERVER_NAME",
+            "default_value": "EVLBOX BEST SERVER",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string|max:250",
+            "field_type": "text"
+        },
+        {
+            "name": "Server Description",
+            "description": "",
+            "env_variable": "NS_SERVER_DESC",
+            "default_value": "The Best Server",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string|max:500",
+            "field_type": "text"
+        },
+        {
+            "name": "Extras",
+            "description": "",
+            "env_variable": "NS_EXTRA_ARGUMENTS",
+            "default_value": "+setplaylist aitdm",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:1000",
+            "field_type": "text"
+        },
+        {
+            "name": "Server PORT",
+            "description": "Server Port",
+            "env_variable": "NS_PORT",
+            "default_value": "EnterPort",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        }
+    ]
+}
