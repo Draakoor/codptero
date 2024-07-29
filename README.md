@@ -32,4 +32,8 @@ Use eggs where game log servers is included!
   
 Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (https://hub.docker.com/u/draakoor)  
 
+
+Windows:
+Ports: 8006 (For VNC), 3389 (For RDP)
+  
 Note: Not all eggs have a working console (output and/or commands working), feel free to pull request.
