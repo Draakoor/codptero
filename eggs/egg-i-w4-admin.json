@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-07-06T16:26:42+02:00",
+    "exported_at": "2024-08-09T17:05:45+02:00",
     "name": "IW4Admin",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\ncd \/mnt\/server && wget https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2024.7.4.1-prerelease\/IW4MAdmin-2024.7.4.1.zip\r\n#cd \/mnt\/server && curl https:\/\/api.github.com\/repos\/RaidMax\/IW4M-Admin\/releases\/latest | grep \"browser_download_url.*.zip\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\niw4madmin=$(find IW4MAdmin-*)\r\ncd \/mnt\/server && tar -xvf ${iw4madmin}\r\ncd \/mnt\/server && rm ${iw4madmin}",
+            "script": "echo \"Installing IW4X Admin\" \r\napt -y update\r\ndpkg --add-architecture i386\r\napt -y install curl wget unzip\r\nexport HOME=\/mnt\/server\r\ncd \/mnt\/server && wget https:\/\/github.com\/RaidMax\/IW4M-Admin\/releases\/download\/2024.7.4.1-prerelease\/IW4MAdmin-2024.7.4.1.zip\r\n#cd \/mnt\/server && curl https:\/\/api.github.com\/repos\/RaidMax\/IW4M-Admin\/releases\/latest | grep \"browser_download_url.*.zip\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\niw4madmin=$(find IW4MAdmin-*)\r\ncd \/mnt\/server && unzip ${iw4madmin}\r\ncd \/mnt\/server && rm ${iw4madmin}",
             "container": "debian:buster-slim",
             "entrypoint": "bash"
         }
