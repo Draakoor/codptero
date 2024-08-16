@@ -9,7 +9,8 @@ Battlefield 3 ([Venice Unleashed Client](https://github.com/Draakoor/VU-Pterodac
 Alterware (MW2, Ghosts, AW)  
 Plutonium (BO2, BO1, MW3, WAW)  
 Call of Duty 4x  
-Call of Duty MWR H1-Mod (not working at the moment, alternative: https://github.com/dockur/windows)  
+Call of Duty MWR H1-Mod (not tested, alternative: https://github.com/dockur/windows)  
+Call of Duty MWR H2-Mod (not tested, alternative: https://github.com/dockur/windows)  
 Call of Duty 2  
 Call of Duty United Offensive  
 T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
