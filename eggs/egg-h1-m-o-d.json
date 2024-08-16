@@ -4,16 +4,16 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-08-11T21:06:32+02:00",
+    "exported_at": "2024-08-16T22:28:50+02:00",
     "name": "H1MOD",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
     "features": null,
     "docker_images": {
-        "quay.io\/parkervcp\/pterodactyl-images:debian_wine": "quay.io\/parkervcp\/pterodactyl-images:debian_wine"
+        "draakoor\/dockerbo3": "draakoor\/dockerbo3"
     },
     "file_denylist": [],
-    "startup": "wine h1-mod.exe -dedicated +set net_port {{SERVER_PORT}} +exec server.cfg +map_rotate",
+    "startup": "wine h1-mod.exe -nosteam -multiplayer -dedicated +set net_port {{SERVER_PORT}} +exec server.cfg +map_rotate -memoryfix",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -22,10 +22,41 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install H1-Mod debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install wine wine32 unzip git screen mono-devel curl wget -y\r\n\r\necho \"### Downloading S1X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/h1.zip\r\ncd \/mnt\/server && unzip -o h1.zip\r\ncd \/mnt\/server && rm h1.zip",
-            "container": "debian:buster-slim",
+            "script": "echo \"### Downloading S1X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ $DOWNLOAD_URL\r\ncd \/mnt\/server && unzip $FILENAME\r\ncd \/mnt\/server && rm $FILENAME\r\ncd \/mnt\/server && wget https:\/\/github.com\/auroramod\/h1-mod\/releases\/download\/v2.0.1\/h1-mod.exe\r\nchmod 755 h1-mod.exe\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi",
+            "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
     },
-    "variables": []
+    "variables": [
+        {
+            "name": "Download Link",
+            "description": "Link to h1 server files",
+            "env_variable": "DOWNLOAD_URL",
+            "default_value": "https:\/\/files.gofrag.com.br\/h2m\/h1_windows_server.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Filename",
+            "description": "",
+            "env_variable": "FILENAME",
+            "default_value": "h1_windows_server.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "IW4M Log Server - Enabled",
+            "description": "Installs a log server for IW4M Admin (on installation) and runs it on startup. This does not install IW4M Admin itself, run IW4M Admin on a separate container.",
+            "env_variable": "IW4M",
+            "default_value": "1",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|boolean",
+            "field_type": "text"
+        }
+    ]
 }
