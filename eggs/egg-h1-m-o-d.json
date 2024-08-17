@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-08-16T22:28:50+02:00",
+    "exported_at": "2024-08-17T02:16:31+02:00",
     "name": "H1MOD",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"### Downloading S1X ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ $DOWNLOAD_URL\r\ncd \/mnt\/server && unzip $FILENAME\r\ncd \/mnt\/server && rm $FILENAME\r\ncd \/mnt\/server && wget https:\/\/github.com\/auroramod\/h1-mod\/releases\/download\/v2.0.1\/h1-mod.exe\r\nchmod 755 h1-mod.exe\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi",
+            "script": "echo \"### Downloading H1 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ $DOWNLOAD_URL\r\ncd \/mnt\/server && unzip $FILENAME\r\ncd \/mnt\/server && cp -rf h1_windows_server\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h1_windows_server\/\r\ncd \/mnt\/server && rm $FILENAME\r\ncd \/mnt\/server && wget https:\/\/github.com\/auroramod\/h1-mod\/releases\/download\/v2.0.1\/h1-mod.exe\r\ncd \/mnt\/server\/main && wget https:\/\/raw.githubusercontent.com\/DoktorSAS\/h1-mod-server-config\/main\/main\/server.cfg\r\ncd \/mnt\/server chmod 777 h1-mod.exe\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
@@ -45,7 +45,7 @@
             "default_value": "h1_windows_server.zip",
             "user_viewable": false,
             "user_editable": false,
-            "rules": "required|string|max:20",
+            "rules": "required|string|max:100",
             "field_type": "text"
         },
         {
@@ -56,6 +56,16 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Serverconfig",
+            "description": "",
+            "env_variable": "SERVERCFG",
+            "default_value": "server.cfg",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
             "field_type": "text"
         }
     ]
