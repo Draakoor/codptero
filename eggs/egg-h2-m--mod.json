@@ -10,7 +10,7 @@
     "description": null,
     "features": null,
     "docker_images": {
-        "draakoor\/dockerbo3": "draakoor\/dockerbo3"
+        "draakoor\/dockerbo3": "draakoor\/dockerh1"
     },
     "file_denylist": [],
     "startup": "wine h2m-mod.exe -nosteam -dedicated -memoryfix +exec {{SERVERCFG}} +set net_port {{SERVER_PORT}} +map_rotate",
@@ -92,7 +92,7 @@
             "name": "CAMPAIGN MAPS Link",
             "description": "Must be a ZIP",
             "env_variable": "DL_CR",
-            "default_value": "https:\/\/gofile.io\/d\/zNAUec",
+            "default_value": "http:\/\/play2.wellisch-itservice.de\/cw.zip",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
