@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-03-08T01:37:45+01:00",
+    "exported_at": "2024-12-01T23:37:40+01:00",
     "name": "Plutonium with Logserver",
     "author": "dominique@wellisch-itservice.de",
     "description": "Plutonium with logserver",
@@ -13,7 +13,7 @@
         "ghcr.io\/stefanuk12\/ptero-iw4m:dev": "ghcr.io\/stefanuk12\/ptero-iw4m:dev"
     },
     "file_denylist": [],
-    "startup": "cd \"${HOME}\/localappdata\/Plutonium\/\"||exit;wine64 bin\/plutonium-bootstrapper-win32.exe \"${GAMETYPE}${GAMEMODE}\" \"${HOME}\" -dedicated +start_map_rotate +set key \"${KEY}\" +set net_port \"${SERVER_PORT}\" +set sv_config \"${CFG}\" & sleep 30 && { \"${HOME}\/cod-rcon\" -O -P \"${SERVER_PORT}\" -p \"${RCON_PASSWORD}\" & if [ \"${IW4M}\" == 1 ];then \"${HOME}\/iw4m-log-server\" -p \"${SERVER_PORT}\";fi;}",
+    "startup": "cd \"${HOME}\/localappdata\/Plutonium\/\"||exit;wine64 bin\/plutonium-bootstrapper-win32.exe \"${GAMETYPE}${GAMEMODE}\" \"${HOME}\" -dedicated +map_rotate +set key \"${KEY}\" +set net_port \"${SERVER_PORT}\" +exec \"${CFG}\" & sleep 30 && { \"${HOME}\/cod-rcon\" -O -P \"${SERVER_PORT}\" -p \"${RCON_PASSWORD}\" & if [ \"${IW4M}\" == 1 ];then \"${HOME}\/iw4m-log-server\" -p \"${SERVER_PORT}\";fi;}",
     "config": {
         "files": "{\r\n    \"localappdata\/Plutonium\/storage\/t6\/dedicated.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    },\r\n    \"localappdata\/Plutonium\/storage\/t6\/dedicated_zm.cfg\": {\r\n        \"parser\": \"file\",\r\n        \"find\": {\r\n            \"rcon_password\": \"rcon_password \\\"{{server.build.env.RCON_PASSWORD}}\\\"\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",

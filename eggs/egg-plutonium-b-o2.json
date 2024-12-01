@@ -4,17 +4,16 @@
         "version": "PTDL_v2",
         "update_url": "https:\/\/raw.githubusercontent.com\/GaryCraft\/ptero-plutonium\/main\/EGGS\/egg-plutonium-t6.json"
     },
-    "exported_at": "2024-06-03T11:40:58+02:00",
+    "exported_at": "2024-12-01T23:50:42+01:00",
     "name": "Plutonium BO2",
     "author": "atom@our-space.xyz",
     "description": null,
     "features": null,
     "docker_images": {
-        "ghcr.io\/garycraft\/ptero-plutonium:dev": "ghcr.io\/garycraft\/ptero-plutonium:dev",
-        "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest": "ghcr.io\/draakoor\/codptero\/ptero-plutonium:latest"
+        "ghcr.io\/garycraft\/ptero-plutonium:latest": "ghcr.io\/garycraft\/ptero-plutonium:latest"
     },
     "file_denylist": [],
-    "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/Server\/{{PLUTOMODEDIR}}\/ -dedicated +start_map_rotate +set key {{PLUTOKEY}} +set net_port {{SERVER_PORT}} +set sv_config {{PLUTOCFG}}",
+    "startup": "bin\/plutonium-bootstrapper-win32.exe {{PLUTOMODE}} \/home\/container\/Server\/{{PLUTOMODEDIR}}\/ -dedicated +set key {{PLUTOKEY}} +set fs_game {{PLUTOMODS}} +set net_port {{SERVER_PORT}} +exec {{PLUTOCFG}} +map_rotate",
     "config": {
         "files": "{\r\n    \"Plutonium\/T6Server.sh\": {\r\n        \"parser\": \"properties\",\r\n        \"find\": {\r\n            \"PORT\": \"{{server.build.default.port}}\",\r\n            \"KEY\": \"{{server.build.env.PLUTOKEY}}\",\r\n            \"MODE\": \"{{server.build.env.PLUTOMODE}}\",\r\n            \"PAT\": \"\/home\/container\/Server\"\r\n        }\r\n    }\r\n}",
         "startup": "{\r\n    \"done\": \"Heartbeat successful\"\r\n}",
@@ -73,10 +72,20 @@
             "name": "Download File",
             "description": "The Server File this server will download and use to run plutonium.\r\nPlease use this with caution, this could enable a user to run arbitrary code which could be potentially harmful.",
             "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "https:\/\/vault.our-space.xyz\/ATOM\/T6-Server.zip",
+            "default_value": "http:\/\/play2.wellisch-itservice.de\/T6-Server.zip",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Mods",
+            "description": "",
+            "env_variable": "PLUTOMODS",
+            "default_value": "\"\"",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|max:20",
             "field_type": "text"
         }
     ]
