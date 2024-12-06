@@ -27,6 +27,7 @@ Change your iw4madmin config to the new logpath for example /home/container/codl
   
 Game Log Server method:  
 Use eggs where game log servers is included!  
+INFO: Sometimes you need to add the manuel log path too! for example: z:/home/container/Plutonium/storage/t6/main/logs/games_mp.log  
   
   
 Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (https://hub.docker.com/u/draakoor)  
