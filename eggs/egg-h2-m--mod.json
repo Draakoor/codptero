@@ -4,16 +4,16 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-08-17T02:16:40+02:00",
+    "exported_at": "2024-12-07T17:57:51+01:00",
     "name": "H2M-Mod",
     "author": "dominique@wellisch-itservice.de",
-    "description": null,
+    "description": "You need to provide call of duty modern warfare remasterd files and horizonmw files (see variables).\r\nThe wine executable will be downloaded automaticly.",
     "features": null,
     "docker_images": {
-        "draakoor\/dockerbo3": "draakoor\/dockerh1"
+        "draakoor\/dockerbo3": "draakoor\/dockerbo3"
     },
     "file_denylist": [],
-    "startup": "wine h2m-mod.exe -nosteam -dedicated -memoryfix +exec {{SERVERCFG}} +set net_port {{SERVER_PORT}} +map_rotate",
+    "startup": "wine hmw-mod.exe -nosteam -dedicated -memoryfix +exec {{SERVERCFG}} +set net_port {{SERVER_PORT}} +map_rotate",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"### Downloading H1 Base ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ $DOWNLOAD_URL\r\ncd \/mnt\/server && unzip $FILENAME\r\ncd \/mnt\/server && cp -rf h1_windows_server\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h1_windows_server\/\r\ncd \/mnt\/server && rm $FILENAME\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi\r\n\r\n#Install H2\r\napt update\r\napt install -y p7zip-full\r\napt install -y git\r\nwget -P \/mnt\/server\/ $H2M_URL\r\ncd \/mnt\/server && 7za x $H2_FILENAME\r\ncd \/mnt\/server && rm $H2_FILENAME\r\ncp -rf \/mnt\/server\/h2m\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h2m\/\r\nchmod -R 755 \/mnt\/server\/*\r\ncd \/mnt\/server && git clone https:\/\/github.com\/Draakoor\/h2m-server-config.git\r\ncp -rf \/mnt\/server\/h2m-server-config\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h2m-serverconfig\/\r\n\r\n#Install Campaign Maps if needed\r\nif [ ${CRMAPS} == 1 ]\r\nthen\r\ncd \/mnt\/server\/h2m-usermaps\r\nwget $DL_CR -o cr.zip\r\nunzip cr.zip\r\nrm cr.zip\r\nfi",
+            "script": "echo \"### Downloading H1 Base ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ $DOWNLOAD_URL\r\ncd \/mnt\/server && unzip $FILENAME\r\ncd \/mnt\/server && rm $FILENAME\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\necho \"### Downloading IW4MAdmin Gamelog Server Base ###\"\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi\r\n\r\n#Install H2 Base Files\r\necho \"### Downloading HorzionMW Base ###\"\r\napt update\r\napt install -y p7zip-full\r\napt install -y git\r\nwget -P \/mnt\/server\/ $H2M_URL\r\ncd \/mnt\/server && 7za x $H2_FILENAME\r\ncd \/mnt\/server && rm $H2_FILENAME\r\ncp -rf \/mnt\/server\/h2m\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h2m\/\r\nchmod -R 755 \/mnt\/server\/*\r\ncd \/mnt\/server && git clone https:\/\/github.com\/Draakoor\/h2m-server-config.git\r\ncp -rf \/mnt\/server\/h2m-server-config\/* \/mnt\/server\r\nrm -R \/mnt\/server\/h2m-serverconfig\/\r\n\r\n#Install Campaign Maps if needed\r\nif [ ${CRMAPS} == 1 ]\r\nthen\r\necho \"### Downloading HorzionMW Campaign Maps ###\"\r\ncd \/mnt\/server\/h2m-usermaps\r\nwget $DL_CR -o cr.zip\r\nunzip cr.zip\r\nrm cr.zip\r\nfi\r\n\r\n#Install latest HorizonMW Client exe\r\necho \"### Downloading latest HorzionMW Wine Exe ###\"\r\ncd \/mnt\/server && curl https:\/\/api.github.com\/repos\/MichaelDeets\/HorizonMW-Client\/releases\/latest | grep \"browser_download_url.*exe\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nchmod +x hmw-mod.exe\r\n\r\necho \"### All Done ###\"",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
@@ -36,16 +36,6 @@
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
-            "field_type": "text"
-        },
-        {
-            "name": "Filename",
-            "description": "",
-            "env_variable": "FILENAME",
-            "default_value": "h1_windows_server.zip",
-            "user_viewable": false,
-            "user_editable": false,
-            "rules": "required|string|max:20",
             "field_type": "text"
         },
         {
@@ -66,16 +56,6 @@
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
-            "field_type": "text"
-        },
-        {
-            "name": "H2 Filename",
-            "description": "",
-            "env_variable": "H2_FILENAME",
-            "default_value": "h2m.7z",
-            "user_viewable": false,
-            "user_editable": false,
-            "rules": "required|string|max:20",
             "field_type": "text"
         },
         {
@@ -106,6 +86,26 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Filename",
+            "description": "",
+            "env_variable": "FILENAME",
+            "default_value": "h1.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
+            "field_type": "text"
+        },
+        {
+            "name": "H2 Filename",
+            "description": "",
+            "env_variable": "H2_FILENAME",
+            "default_value": "h2m.7z",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string|max:20",
             "field_type": "text"
         }
     ]
