@@ -4,13 +4,13 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-12-06T06:02:07+01:00",
+    "exported_at": "2024-12-08T03:05:30+01:00",
     "name": "Plutonium with python Logserver",
     "author": "dominique@wellisch-itservice.de",
     "description": "Plutonium Client with python iw4m log server.\r\nYou need to add +set zombiemode 1 for t4 zombies to the start arguments",
     "features": null,
     "docker_images": {
-        "draakoor\/dockerbo3": "draakoor\/dockerbo3"
+        "draakoor\/dockerpluto": "draakoor\/dockerpluto"
     },
     "file_denylist": [],
     "startup": "(cd \"${HOME}\/Plutonium\/\" && wine64 bin\/plutonium-bootstrapper-win32.exe \"${GAMETYPE}${GAMEMODE}\" \"${HOME}\" -dedicated +map_rotate +set key \"${KEY}\" +set net_port \"${SERVER_PORT}\" +exec \"${CFG}\") & python3 runserver.py",
