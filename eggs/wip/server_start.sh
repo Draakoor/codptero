@@ -1,5 +1,10 @@
 #!/bin/bash
-
+# Setup NSS Wrapper for use ($NSS_WRAPPER_PASSWD and $NSS_WRAPPER_GROUP have been set by the Dockerfile)
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+envsubst < /passwd.template > ${NSS_WRAPPER_PASSWD}
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libnss_wrapper.so
+sysctl kernel.unprivileged_userns_clone=1
 # this is really only necessary outside of docker, but I'll leave this here
 kill_subshells_and_exit() {
     echo \n "Interrupt caught! Killing all subshells."
@@ -80,7 +85,7 @@ if [ ! -f "$DESTINATION" ]; then
 fi
 
 # Ensure the provided config exists or default to server_default.cfg
-CONFIG_DIR="/config"
+CONFIG_DIR="/home/container/hmw"
 if [ ! -f "$CONFIG_DIR/$CFG" ]; then
     echo "[$(date --rfc-3339=s)]::[WARNING]: Configuration file '$CFG' not found in '$CONFIG_DIR'."
     echo "Using built-in 'server_default.cfg' instead."
@@ -89,7 +94,7 @@ if [ ! -f "$CONFIG_DIR/$CFG" ]; then
 fi
 
 cp "$CONFIG_DIR/$CFG" $GAME_DIR/main/$CFG
-cp -r /user_scripts $GAME_DIR/
+cp -r /home/container/hmw/user_scripts $GAME_DIR/
 
 cd $GAME_DIR
 
