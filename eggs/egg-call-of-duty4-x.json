@@ -4,13 +4,13 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-06-22T16:15:24+02:00",
+    "exported_at": "2025-02-10T16:49:50+01:00",
     "name": "Call of Duty 4X",
     "author": "admin@grimsi.de",
     "description": "A client and server modification for Call of Duty 4: Modern Warfare with the aim to fix bugs and enhance gameplay!",
     "features": null,
     "docker_images": {
-        "quay.io\/parkervcp\/pterodactyl-images:base_debian": "quay.io\/parkervcp\/pterodactyl-images:base_debian"
+        "quay.io\/parkervcp\/pterodactyl-images:debian_wine": "quay.io\/parkervcp\/pterodactyl-images:debian_wine"
     },
     "file_denylist": [],
     "startup": "if [ ! -d \"{{GAME_FILE_PATH}}\" ]; then echo \"CoD 4 game files not found. Maybe they are not mounted?\"; echo \"In order for the server to start mount the game files here: {{GAME_FILE_PATH}}\"; while true; do sleep 2; done; fi; .\/cod4x18_dedrun +exec server.cfg +set dedicated \"{{SERVER_NETWORK_MODE}}\" +set sv_maxclients \"{{MAX_PLAYERS}}\" +set net_ip 0.0.0.0 +set net_port \"{{SERVER_PORT}}\" +set fs_basepath \"{{GAME_FILE_PATH}}\" +set fs_homepath . +map_rotate",
@@ -22,9 +22,9 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/ash\r\n# CoD 4X Installation script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\nDOWNLOAD_LINK=https:\/\/cod4x.me\/downloads\/cod4x_server-linux.zip\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\/\r\n\r\n## this is a simple script to validate a download url actually exists and is reachable\r\nif [ ! -z \"${DOWNLOAD_LINK}\" ]; then \r\n    if curl --output \/dev\/null --silent --head --fail ${DOWNLOAD_LINK}; then\r\n        echo -e \"Download-URL is reachable.\"\r\n    else        \r\n        echo -e \"Could not reach ${DOWNLOAD_LINK}.\"\r\n        echo -e \"Aborting installation...\"\r\n        exit 1\r\n    fi\r\nfi\r\n\r\n# Download the server binaries\r\necho -e \"running 'curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*\/}'\" \r\ncurl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*\/}\r\n\r\necho -e \"Unpacking server files\"\r\nunzip ${DOWNLOAD_LINK##*\/}\r\n\r\necho -e \"Moving server files to \/mnt\/server\"\r\nmv .\/cod4x-linux-server\/* .\r\n\r\necho -e \"Cleaning up downloaded files.\"\r\nrm ${DOWNLOAD_LINK##*\/}\r\nrm -rf .\/cod4x-linux-server\r\n\r\necho -e \"Installing required runtime libs.\"\r\nmv .\/runtime\/libstdc++.so.6 .\r\n\r\necho -e \"Generating config file\"\r\ncat <<EOF > .\/main\/server.cfg\r\nsv_hostname \"${SERVER_NAME}\"\r\ng_password \"${SERVER_PASSWORD}\"\r\nrcon_password \"${ADMIN_PASSWORD}\"\r\n\r\nsv_punkbuster \"0\"\r\nsv_cheats \"0\"\r\nsv_voice \"0\"\r\nscr_teambalance \"1\"\r\ng_allowvote \"1\"\r\n\r\nsv_authorizemode \"0\"\r\nsv_authtoken \"${SERVER_AUTH_TOKEN}\"\r\n\r\nsv_floodProtect \"1\"\r\n\r\nsv_mapRotation \"${MAP_ROTATION}\"\r\nEOF\r\n\r\necho -e \"running 'chmod +x .\/cod4x18_dedrun'\"\r\nchmod +x .\/cod4x18_dedrun\r\n\r\necho -e \"Installation complete\"",
-            "container": "quay.io\/matthewp\/pterodactyl:alpine-install",
-            "entrypoint": "ash"
+            "script": "#!\/bin\/bash\r\n# CoD 4X Installation script\r\n#\r\n# Server Files: \/mnt\/server\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt install unzip curl wget -y\r\n\r\nDOWNLOAD_LINK=https:\/\/cod4x.ovh\/uploads\/short-url\/59kvOM9hBabZjPJRlLX029BcskI.zip\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\/\r\n\r\n## this is a simple script to validate a download url actually exists and is reachable\r\nif [ ! -z \"${DOWNLOAD_LINK}\" ]; then \r\n    if curl --output \/dev\/null --silent --head --fail ${DOWNLOAD_LINK}; then\r\n        echo -e \"Download-URL is reachable.\"\r\n    else        \r\n        echo -e \"Could not reach ${DOWNLOAD_LINK}.\"\r\n        echo -e \"Aborting installation...\"\r\n        exit 1\r\n    fi\r\nfi\r\n\r\n# Download the server binaries\r\necho -e \"running 'curl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*\/}'\" \r\ncurl -sSL ${DOWNLOAD_LINK} -o ${DOWNLOAD_LINK##*\/}\r\n\r\necho -e \"Unpacking server files\"\r\nunzip -o ${DOWNLOAD_LINK##*\/}\r\n\r\necho -e \"Moving server files to \/mnt\/server\"\r\nmv .\/cod4x_server-linux_21.2\/cod4x-linux-server\/* .\r\n\r\necho -e \"Cleaning up downloaded files.\"\r\nrm ${DOWNLOAD_LINK##*\/}\r\nrm -rf .\/cod4x_server-linux_21.2\/cod4x-linux-server\r\n\r\necho -e \"Installing required runtime libs.\"\r\nmv .\/runtime\/libstdc++.so.6 .\r\n\r\necho -e \"Generating config file\"\r\ncat <<EOF > .\/main\/server.cfg\r\nsv_hostname \"${SERVER_NAME}\"\r\ng_password \"${SERVER_PASSWORD}\"\r\nrcon_password \"${ADMIN_PASSWORD}\"\r\n\r\nsv_punkbuster \"0\"\r\nsv_cheats \"0\"\r\nsv_voice \"0\"\r\nscr_teambalance \"1\"\r\ng_allowvote \"1\"\r\n\r\nsv_authorizemode \"0\"\r\nsv_authtoken \"${SERVER_AUTH_TOKEN}\"\r\n\r\nsv_floodProtect \"1\"\r\n\r\nsv_mapRotation \"${MAP_ROTATION}\"\r\nEOF\r\n\r\necho -e \"running 'chmod +x .\/cod4x18_dedrun'\"\r\nchmod +x .\/cod4x18_dedrun\r\n\r\necho -e \"Installation complete\"",
+            "container": "debian:buster-slim",
+            "entrypoint": "bash"
         }
     },
     "variables": [
@@ -85,7 +85,7 @@
             "default_value": "gametype war map mp_crossfire",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "nullable|string|max:1000",
+            "rules": "nullable|string",
             "field_type": "text"
         },
         {
@@ -100,7 +100,7 @@
         },
         {
             "name": "Server Authentication Token",
-            "description": "Token needed to list your server on the public masterserver. Generate here: https:\/\/cod4master.cod4x.me\/index.php?token_generator=true",
+            "description": "Token needed to list your server on the public masterserver. Generate here: https:\/\/cod4master.cod4x.ovh\/index.php?token_generator=true",
             "env_variable": "SERVER_AUTH_TOKEN",
             "default_value": "",
             "user_viewable": true,
