@@ -8,7 +8,7 @@ Alterware (MW2, Ghosts, AW)
 Plutonium (BO2, BO1, MW3, WAW)  
 Call of Duty 4x  
 Call of Duty MWR H1-Mod (not working at the moment - we are waiting for linux support, alternative: https://github.com/dockur/windows)  
-Call of Duty MWR H2-Mod (test state, download it and give feedback)  
+Call of Duty MWR H2-Mod (not working)  
 Call of Duty 2  
 Call of Duty United Offensive  
 T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
@@ -33,7 +33,7 @@ INFO: Sometimes you need to add the manuel log path too! for example: z:/home/co
 Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (https://hub.docker.com/u/draakoor)  
 
 
-Windows:
-Ports: 8006 (For VNC), 3389 (For RDP)
+H1-Mod/H2M/HMW:  
+I am using AMP for that stuff now, if you want templates for amp check it out here (https://github.com/Draakoor/AMPTemplates/tree/dev)
   
 Note: Not all eggs have a working console (output and/or commands working), feel free to pull request.
