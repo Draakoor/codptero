@@ -42,3 +42,6 @@ Mount H2M/HMW: /home/container/H2M
 Mount H1-Mod: /home/container/h1mod
   
 Note: Not all eggs have a working console (output and/or commands working), feel free to pull request.
+
+
+** Templates for amp are here https://github.com/Draakoor/AMPTemplates/tree/dev **
