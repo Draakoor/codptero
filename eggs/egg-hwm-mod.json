@@ -1,0 +1,62 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-05-27T14:50:28-04:00",
+    "name": "H2M Mod",
+    "author": "support@craftway.net",
+    "description": "H2M Dedicated Server for Windows using Proton-GE",
+    "features": null,
+    "docker_images": {
+        "msmcpeake\/h2m-wine-minimal": "msmcpeake\/h2m-wine-minimal"
+    },
+    "file_denylist": [],
+    "startup": "cd H2M; wine hmw-mod.exe -nosteam -dedicated -memoryfix +exec server.cfg +set net_ip 0.0.0.0 +set net_port \"$SERVER_PORT\" +map_rotate",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Server started\"\r\n}",
+        "logs": "{}",
+        "stop": "^V"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# H2M Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n# Image to install with is 'ghcr.io\/parkervcp\/yolks:wine_staging'\r\n\r\n# Install packages. Default packages below are not required if using our existing install image thus speeding up the install process.\r\napt -y update\r\napt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates unzip jq coreutils wget sudo\r\n\r\n# Launch Xvfb\r\necho \"[INFO] Starting Xvfb on DISPLAY=:0 (${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH})\"\r\nmkdir -p \/tmp\/.X11-unix\r\nchmod 1777 \/tmp\/.X11-unix\r\nXvfb :0 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH} &\r\nexport DISPLAY=:0\r\n\r\n## just in case someone removed the defaults.\r\nif [[ \"${STEAM_USER}\" == \"\" ]] || [[ \"${STEAM_PASS}\" == \"\" ]]; then\r\n    echo -e \"steam user is not set.\\n\"\r\n    echo -e \"Using anonymous user.\\n\"\r\n    STEAM_USER=anonymous\r\n    STEAM_PASS=\"\"\r\n    STEAM_AUTH=\"\"\r\nelse\r\n    echo -e \"user set to ${STEAM_USER}\"\r\nfi\r\n\r\n## download and install steamcmd\r\ncd \/tmp\r\nmkdir -p \/mnt\/server\/steamcmd\r\nchown -R root:root \/mnt\r\nchown -R root:root \/mnt\/server\r\n\r\ncd \/mnt\/server\/steamcmd\r\ncurl curl -sqL \"https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\" | tar zxvf -\r\n\r\n# SteamCMD fails otherwise for some reason, even running as root.\r\n# This is changed at the end of the install process anyways.\r\nchown -R root:root \/mnt\r\nchown -R root:root \/mnt\/server\r\nchown -R root:root \/home\/container\r\nexport HOME=\/mnt\/server\r\n\r\n## Create new server directory\r\nmkdir -p \/mnt\/server\/H2M\r\ncd \/mnt\/server\r\n\r\n## Install game using steamcmd.sh\r\nsteamcmd\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \/mnt\/server\/H2M +login ${STEAM_USER} ${STEAM_PASS} +app_update ${SRCDS_APPID} validate +quit\r\n\r\n# Winetricks\r\ncd \/mnt\/server\r\nWINEPREFIX=\/mnt\/server\/.wine\r\nWINEDEBUG=-all\r\necho \"[INFO] Installing Steam through winetricks\"\r\nwinetricks --unattended --force --no-isolate -q steam\r\nwineserver -w\r\necho \"[INFO] Starting Steam once to update\"\r\nwine \"$WINEPREFIX\/drive_c\/Program Files (x86)\/Steam\/Steam.exe\" -silent &\r\necho \"[INFO] Sleeping to wait for Steam to finish\"\r\nsleep 180  # Give Steam time to settle\r\npkill -f Steam.exe\r\nwineserver -w\r\nwine reg delete \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" \/v Steam \/f\r\nchown -R root:root \/mnt\r\nchown -R root:root \/mnt\/server\r\nchown -R root:root \/home\/container\r\n\r\n# Install H2M mod files\r\ncd \/mnt\/server\/H2M\r\ncurl -sSL -o updater.sh https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/updater.sh\r\nchmod +x updater.sh\r\n.\/updater.sh\r\n\r\ncurl -sSL -o server.cfg https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmasteredserver.cfg\r\n\r\ncd \/mnt\/server\r\ncurl -sSL -o H2MServer.sh https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/H2MServer.sh\r\nchmod +x H2MServer.sh\r\n\r\nchmod -R 777 \/mnt\/server\/H2M\r\n\r\n## install end\r\necho \"-----------------------------------------\"\r\necho \"Installation completed...\"\r\necho \"-----------------------------------------\"",
+            "container": "ghcr.io\/parkervcp\/yolks:wine_staging",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "App ID",
+            "description": "",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "393100",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|numeric|digits_between:1,7",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Username",
+            "description": "",
+            "env_variable": "STEAM_USER",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Password",
+            "description": "",
+            "env_variable": "STEAM_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
