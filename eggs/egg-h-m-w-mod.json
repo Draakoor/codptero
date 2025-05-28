@@ -4,9 +4,9 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2025-05-27T14:50:28-04:00",
-    "name": "H2M Mod",
-    "author": "support@craftway.net",
+    "exported_at": "2025-05-28T07:53:48+02:00",
+    "name": "HMW Mod",
+    "author": "dominique@wellisch-itservice.de",
     "description": "H2M Dedicated Server for Windows using Proton-GE",
     "features": null,
     "docker_images": {
