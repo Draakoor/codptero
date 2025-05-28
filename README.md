@@ -7,8 +7,8 @@ Project Shield (Black Ops 4 Demonware Server)
 Alterware (MW2, Ghosts, AW)  
 Plutonium (BO2, BO1, MW3, WAW)  
 Call of Duty 4x  
-Call of Duty MWR H1-Mod (not working at the moment - we are waiting for linux support, alternative: https://github.com/dockur/windows)  
-Call of Duty MWR H2-Mod (not working)  
+Call of Duty MWR H1-Mod
+Call of Duty MWR H2-Mod
 Call of Duty 2  
 Call of Duty United Offensive  
 T7x (Use this for hosting, https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
@@ -33,7 +33,9 @@ INFO: Sometimes you need to add the manuel log path too! for example: z:/home/co
 Images are splitted to github (https://github.com/Draakoor?tab=packages&repo_name=codptero) and docker (https://hub.docker.com/u/draakoor)  
 
 
-H1-Mod/H2M/HMW:  
-I am using AMP for that stuff now, if you want templates for amp check it out here (https://github.com/Draakoor/AMPTemplates/tree/dev)
+# HMW-Mod:  
+Finally, here is a working egg.  Due to the need to install via Steam and also the mod files through a script, it takes a bit of time to deploy a server. You unfortunately cannot stage a mount before server creation, so you'd need stop the egg install and stage a mount for /home/container/H2M  
+Steam is installed through winetricks,  
+Steam is started one time to install updates for the client  
   
 Note: Not all eggs have a working console (output and/or commands working), feel free to pull request.
