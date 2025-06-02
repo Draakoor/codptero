@@ -10,12 +10,12 @@ apt install -y apt-transport-https
 wget -nc https://dl.winehq.org/wine-builds/winehq.key
 
 apt-key add winehq.key && \
-add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'
+add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ noble main'
 
 # Setup key and repository for dependency of wine
-wget -nv https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_20.04/Release.key -O Release.key &&
+wget -nv https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_24.04/Release.key -O Release.key &&
 apt-key add - < Release.key &&
-apt-add-repository 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_20.04/ ./'
+apt-add-repository 'deb https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/xUbuntu_24.04/ ./'
 
 # Update repository 
 apt-get update
