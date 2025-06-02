@@ -20,7 +20,7 @@ apt-get install -y xvfb
 # Clean key files
 rm winehq.key Release.key
 
-wine --version
+wine64 --version
 
 
 # Install winetricks
