@@ -21,7 +21,7 @@ apt-get install -y xvfb
 wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O /usr/sbin/winetricks
 chmod a+x /usr/sbin/winetricks
 
-
+wine --version
 # Configure our wine environment
 # winecfg
 
