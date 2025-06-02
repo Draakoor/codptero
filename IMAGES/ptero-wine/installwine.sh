@@ -11,7 +11,7 @@ wget -O - https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/a
 wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/noble/winehq-noble.sources
 
 # Update repository 
-apt-get update
+apt-get update --fix-missing
 
 ## Now we will install wine
 apt-get install -y --install-recommends winehq-stable winbind
