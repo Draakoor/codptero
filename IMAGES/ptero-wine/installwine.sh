@@ -17,12 +17,6 @@ apt-get update
 apt-get install -y --install-recommends winehq-stable winbind
 apt-get install -y xvfb
 
-# Clean key files
-rm winehq.key Release.key
-
-wine64 --version
-
-
 # Install winetricks
 wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks -O /usr/sbin/winetricks
 chmod a+x /usr/sbin/winetricks
