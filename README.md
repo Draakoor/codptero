@@ -21,6 +21,7 @@
 - **T7x**  
   - [Use this JSON egg for hosting](https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)
 - **Jedi Academy** (Vanilla, TaystJK, OpenJK)
+- **Jedi Outcast** (Vanilla, JK2MV)
 - **Movie Battles 2 Mod** (Jedi Academy)  
   - Includes RTV/RTM support  
 
