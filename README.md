@@ -19,7 +19,8 @@
 - **Call of Duty 2**  
 - **Call of Duty: United Offensive**  
 - **T7x**  
-  - [Use this JSON egg for hosting](https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)  
+  - [Use this JSON egg for hosting](https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)
+- **Jedi Academy** (Vanilla, TaystJK, OpenJK)
 - **Movie Battles 2 Mod** (Jedi Academy)  
   - Includes RTV/RTM support  
 
