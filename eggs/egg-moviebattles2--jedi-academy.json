@@ -4,16 +4,16 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-07-04T18:02:44+02:00",
-    "name": "Moviebattles 2 (Jedi Academy)",
+    "exported_at": "2025-06-10T16:26:19+02:00",
+    "name": "Moviebattles 2 Steamcmd",
     "author": "dominique@wellisch-itservice.de",
-    "description": "Dedicated Server for moviebattles 2",
+    "description": "Dedicated Server for moviebattles 2 via steamcmd",
     "features": null,
     "docker_images": {
         "draakoor\/jka:latest": "draakoor\/jka:latest"
     },
     "file_denylist": [],
-    "startup": ".\/mbiided.i386 +set dedicated 2 +set net_port {{SERVER_PORT}} +exec server.cfg &python2.7 Linux\/rtvrtm.py",
+    "startup": "GameData\/MBIIUpdater\/mb2updater.sh &.\/GameData\/mbiided.i386 +set dedicated 2 +set net_port {{SERVER_PORT}} +exec server.cfg &python2.7 GameData\/Linux\/rtvrtm.py",
     "config": {
         "files": "{}",
         "startup": "{\r\n    \"done\": \"------- Game Initialization -------\"\r\n}",
@@ -22,20 +22,60 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Installling JKA Base\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/base.zip\r\nunzip base.zip\r\nrm base.zip\r\n\r\necho \"Installing OpenJK\"\r\ncurl https:\/\/api.github.com\/repos\/jacoders\/openjk\/releases\/latest | grep \"browser_download_url.*OpenJK-linux-x86_64.tar.gz\" | cut -d : -f 2,3 | tr -d \\\" | wget -qi -\r\nopenjk=$(find OpenJK-linux*)\r\ncd \/mnt\/server && tar -xvf ${openjk} && \r\nrm ${openjk}\r\n\r\necho \"Installing MB2 Updater\"\r\nwget https:\/\/www.moviebattles.org\/download\/MBII_CLI_Updater.zip\r\nunzip MBII_CLI_Updater.zip\r\nrm MBII_CLI_Updater.zip\r\nwget ${SERVER_DOWNLOAD} -v -O mod.zip\r\nunzip mod.zip\r\nrm mod.zip\r\ncd \/mnt\/server\/MBII && mv -f jampgamei386.so jampgamei386.jamp.so\r\ncd \/mnt\/server\/MBII && cp jampgamei386.nopp.so jampgamei386.so\r\nchmod +x mbiided.i386\r\nchmod +x linuxjampded\r\n\r\necho \"Copying default config\"\r\ncp \/mnt\/server\/MBII\/server_config_default.cfg \/mnt\/server\/MBII\/server.cfg\r\n\r\necho \"Installing RTV\/RTM\"\r\ncd \/mnt\/server && wget https:\/\/www.moviebattles.org\/download\/RTVRTM.zip\r\nunzip RTVRTM.zip\r\nrm -R Windows\/\r\nrm RTVRTM.zip\r\nchmod 755 Linux\/rtvrtm.py\r\nrm LICENSE.txt",
-            "container": "draakoor\/jka:latest",
+            "script": "#!\/bin\/bash\r\n# steamcmd Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n\r\n## just in case someone removed the defaults.\r\nif [ \"${STEAM_USER}\" == \"\" ]; then\r\n    echo -e \"steam user is not set.\\n\"\r\n    echo -e \"Using anonymous user.\\n\"\r\n    STEAM_USER=anonymous\r\n    STEAM_PASS=\"\"\r\n    STEAM_AUTH=\"\"\r\nelse\r\n    echo -e \"user set to ${STEAM_USER}\"\r\nfi\r\n\r\n## download and install steamcmd\r\ncd \/tmp\r\nmkdir -p \/mnt\/server\/steamcmd\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \/mnt\/server\/steamcmd\r\nmkdir -p \/mnt\/server\/steamapps # Fix steamcmd disk write error when this folder is missing\r\ncd \/mnt\/server\/steamcmd\r\n\r\n# SteamCMD fails otherwise for some reason, even running as root.\r\n# This is changed at the end of the install process anyways.\r\nchown -R root:root \/mnt\r\nexport HOME=\/mnt\/server\r\n\r\n## install game using steamcmd\r\n.\/steamcmd.sh +force_install_dir \/mnt\/server +login ${STEAM_USER} ${STEAM_PASS} ${STEAM_AUTH} $( [[ \"${WINDOWS_INSTALL}\" == \"1\" ]] && printf %s '+@sSteamCmdForcePlatformType windows' ) +app_update ${SRCDS_APPID} ${EXTRA_FLAGS} validate +quit ## other flags may be needed depending on install. looking at you cs 1.6\r\n\r\n## set up 32 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk32\r\ncp -v linux32\/steamclient.so ..\/.steam\/sdk32\/steamclient.so\r\n\r\n## set up 64 bit libraries\r\nmkdir -p \/mnt\/server\/.steam\/sdk64\r\ncp -v linux64\/steamclient.so ..\/.steam\/sdk64\/steamclient.so\r\n\r\necho \"Installing MB2 Updater\"\r\nmkdir \/mnt\/server\/GameData\/MBIIUpdater\r\ncd \/mnt\/server\/GameData\/MBIIUpdater\r\nwget https:\/\/www.moviebattles.org\/download\/MBII_CLI_Updater.zip\r\nunzip MBII_CLI_Updater.zip\r\nrm MBII_CLI_Updater.zip\r\n\r\ncat << 'EOF' > mb2installer.sh\r\n#!\/usr\/bin\/env bash\r\n\r\n# Updater requires .NET Core 3.1 and should be placed in the game directory.\r\n# Customize variables below as necessary.\r\n\r\n# directory where base and MBII folder reside (AKA GameData on clients)\r\necho \"Start MB2 Update\"\r\ngamedir=\"\/mnt\/server\/GameData\/\"\r\n\r\ncd $gamedir\r\ndotnet MBII_CommandLine_Update_XPlatform.dll\r\ncd $gamedir\/MBII\r\nmv -f jampgamei386.so jampgamei386.jamp.so\r\ncp jampgamei386.nopp.so jampgamei386.so\r\n\r\necho \"Done Updating\"\r\nEOF\r\n\r\nchmod +x mb2installer.sh\r\n\r\n\/mnt\/server\/GameData\/MBIIUpdater\/mb2installer.sh\r\n\r\ncat << 'EOF' > mb2updater.sh\r\n#!\/usr\/bin\/env bash\r\n\r\n# Updater requires .NET Core 3.1 and should be placed in the game directory.\r\n# Customize variables below as necessary.\r\n\r\n# directory where base and MBII folder reside (AKA GameData on clients)\r\necho \"Start MB2 Update\"\r\ngamedir=\"\/home\/container\/GameData\"\r\n\r\ncd $gamedir\r\ndotnet MBII_CommandLine_Update_XPlatform.dll\r\ncd $gamedir\/MBII\r\nmv -f jampgamei386.so jampgamei386.jamp.so\r\ncp jampgamei386.nopp.so jampgamei386.so\r\n\r\necho \"Done Updating\"\r\nEOF\r\n\r\nchmod +x mb2updater.sh\r\n\r\necho \"Copying default config\"\r\ncp \/mnt\/server\/GameData\/MBII\/server_config_default.cfg \/mnt\/server\/MBII\/server.cfg\r\n\r\necho \"Installing RTV\/RTM\"\r\ncd \/mnt\/server\/GameData && wget https:\/\/www.moviebattles.org\/download\/RTVRTM.zip\r\nunzip RTVRTM.zip\r\nrm -R Windows\/\r\nrm RTVRTM.zip\r\nchmod 755 Linux\/rtvrtm.py\r\nrm LICENSE.txt\r\n\r\necho \"Setting Permissions\"\r\nchmod -R 755 \/mnt\/server",
+            "container": "ghcr.io\/pterodactyl\/installers:debian",
             "entrypoint": "bash"
         }
     },
     "variables": [
         {
-            "name": "Download File",
-            "description": "Download for the mod",
-            "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "https:\/\/fastdl.wellisch-itservice.de\/moviebattles.zip",
+            "name": "App ID",
+            "description": "",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "6020",
             "user_viewable": false,
             "user_editable": false,
-            "rules": "required|url",
+            "rules": "required|numeric|digits_between:1,7",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Username",
+            "description": "",
+            "env_variable": "STEAM_USER",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Password",
+            "description": "",
+            "env_variable": "STEAM_PASS",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Steam Authenticator",
+            "description": "Enter your one time code for installing the server",
+            "env_variable": "STEAM_AUTH",
+            "default_value": "",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "string",
+            "field_type": "text"
+        },
+        {
+            "name": "Windows Install",
+            "description": "Windows Install because there are no linux files.\r\nWe only need the base files so we dont care about the windows binary",
+            "env_variable": "WINDOWS_INSTALL",
+            "default_value": "1",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|boolean",
             "field_type": "text"
         }
     ]
