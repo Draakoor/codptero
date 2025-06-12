@@ -62,7 +62,7 @@
             "name": "Download File",
             "description": "The Server File this server will download and use to run plutonium.\r\nPlease use this with caution, this could enable a user to run arbitrary code which could be potentially harmful.",
             "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "https:\/\/wellisch-itservice.de\/bo1.zip",
+            "default_value": "",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
