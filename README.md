@@ -7,22 +7,22 @@
 
 ## 📦 Available Eggs
 
-- **Titanfall 2** (Northstar Client)  
-- **Sven Co-op**  
-- **Project Shield** (Black Ops 4 Demonware Server)  
-- **Alterware** (MW2, Ghosts, AW)  
-- **Plutonium** (BO2, BO1, MW3, WaW)  
-- **Call of Duty 4x**  
-- **Call of Duty MWR**  
+- **Titanfall 2** (Northstar Client, manual upload required because mount)  
+- **Sven Co-op**  (steamcmd)
+- **Project Shield** (Black Ops 4 Demonware Server, github release)  
+- **Alterware** (MW2, Ghosts, AW)   (custom ftp url)  
+- **Plutonium** (BO2, BO1, MW3, WaW)   (custom ftp url)  
+- **Call of Duty 4x** (uses mount for files, manual upload required)  
+- **Call of Duty MWR**  (steamcmd)
   - H1-Mod  
   - H2M/HMW  
-- **Call of Duty 2**  
-- **Call of Duty: United Offensive**  
-- **T7x**  
+- **Call of Duty 2**  (custom ftp url)  
+- **Call of Duty: United Offensive**  (custom ftp url) 
+- **T7x**  (uses steamcmd for mp, zombies need manual uploading)  
   - [Use this JSON egg for hosting](https://github.com/Draakoor/codptero/blob/main/eggs/egg-t7x.json)
-- **Jedi Academy** (Vanilla, TaystJK, OpenJK)
-- **Jedi Outcast** (Vanilla, JK2MV)
-- **Movie Battles 2 Mod** (Jedi Academy)  
+- **Jedi Academy** (Vanilla, TaystJK, OpenJK with steamcmd) 
+- **Jedi Outcast** (Vanilla, JK2MV with steamcmd)
+- **Movie Battles 2 Mod** (Jedi Academy with steamcmd)  
   - Includes RTV/RTM support  
 
 ---
