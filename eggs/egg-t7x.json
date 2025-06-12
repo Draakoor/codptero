@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2024-08-17T03:07:42+02:00",
+    "exported_at": "2025-06-12T23:11:10+02:00",
     "name": "T7x",
     "author": "dominique@wellisch-itservice.de",
     "description": "Run a BOIII dedicated server.\r\n\r\nNote: Installation slimming is enabled by default, removing the pre-installed multiplayer maps. This is to reduce the size of the server. You can disable this and have all multiplayer maps installed by default. It's recommended to keep this installed and manually add the maps you want.",
@@ -22,7 +22,7 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/${CONFIG_F}\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"${BOIII}\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} == 1 ]\r\nthen\r\n# Create the folders\r\nessential_dir=\"${install_dir}\/essential\"\r\nzone_dir=\"${install_dir}\/zone\"\r\nmkdir -p $essential_dir\r\n\r\n# Copy needed files over\r\ncp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n# Transfer files over and delete essential dir\r\nrm -r ${zone_dir}\/*\r\ncp -r $essential_dir\/* ${zone_dir}\r\nrm -r $essential_dir\r\necho \"Slimmed installation\"\r\nfi\r\n\r\n#Installing Zombies\r\nif [ ${ZOMBIES} == 1 ]\r\nthen\r\necho \"Installing Zombie Zone Files\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/t7.zip\r\nunzip t7.zip\r\nrm t7.zip\r\nfi\r\n\r\n#Make sure everything is readable\/runable for container user\r\nchmod -R 755 \/mnt\/server*\r\n\r\n#Install required t7x shit\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/t7x.zip\r\nunzip t7x.zip\r\nrm t7x.zip\r\n\r\n# Done\r\necho \"Done!\"",
+            "script": "#!\/bin\/bash\r\n# Install game server - create folder to hold files\r\ninstall_dir=\"\/mnt\/server\"\r\ncd \/tmp\r\nmkdir -p \"${install_dir}\/steamcmd\"\r\ncurl -sSL -o steamcmd.tar.gz https:\/\/steamcdn-a.akamaihd.net\/client\/installer\/steamcmd_linux.tar.gz\r\ntar -xzvf steamcmd.tar.gz -C \"${install_dir}\/steamcmd\"\r\nmkdir -p \"${install_dir}\/steamapps\" # Fix steamcmd disk write error when this folder is missing\r\ncd \"${install_dir}\/steamcmd\"\r\n.\/steamcmd.sh +@sSteamCmdForcePlatformType windows +force_install_dir \"${install_dir}\" +login anonymous +app_update 545990 validate +quit\r\n\r\n# Install server files\r\ncd \"${install_dir}\"\r\ncp -r .\/UnrankedServer\/* .\r\ncurl -Ls \"https:\/\/codeload.github.com\/${CONFIG_F}\/zip\/refs\/heads\/main\" -o main.zip\r\nunzip -o main.zip\r\ncp -r .\/t7-server-config-main\/* .\r\necho \"Installed server config files\"\r\n\r\n# Install boiii\r\nmkdir -p mods\r\ncurl -Ls \"${BOIII}\" -o \"boiii.exe\"\r\necho \"Installed boiii\"\r\n\r\n# Installing i4wm log server\r\nif [ ${IW4M} == 1 ]\r\nthen\r\n# Download the iw4m log server\r\ncd \/mnt\/server\r\nwget \"https:\/\/github.com\/RaidMax\/IW4MAdmin-GameLogServer\/releases\/download\/1.0.0\/GameLogServer.zip\"\r\nunzip GameLogServer.zip\r\nrm GameLogServer.zip\r\n#Changes the IW4M Log Server Default Port 1625 to the Same as the server\r\nsed -i \"s\/1625\/${SERVER_PORT}\/g\" runserver.py \r\nfi\r\n\r\n# Cleanup\r\nrm -r steamapps steamcmd main.zip README.md t7-server-config-main UnrankedServer\r\nrm BOIII_CP_Server.bat BOIII_MP_Server.bat BOIII_ZM_Server.bat copydedicated.bat Launch_Server.bat\r\n\r\n# Slimming\r\nif [ ${SLIM_ZONE} == 1 ]\r\nthen\r\n# Create the folders\r\nessential_dir=\"${install_dir}\/essential\"\r\nzone_dir=\"${install_dir}\/zone\"\r\nmkdir -p $essential_dir\r\n\r\n# Copy needed files over\r\ncp -r ${zone_dir}\/{*patch*,*core*,*patch*,$SERVER_CFG} $essential_dir\r\n\r\n# Transfer files over and delete essential dir\r\nrm -r ${zone_dir}\/*\r\ncp -r $essential_dir\/* ${zone_dir}\r\nrm -r $essential_dir\r\necho \"Slimmed installation\"\r\nfi\r\n\r\n#Installing Zombies\r\nif [ ${ZOMBIES} == 1 ]\r\nthen\r\necho \"Installing Zombie Zone Files\"\r\ncd \/mnt\/server\r\nwget https:\/\/wellisch-itservice.de\/t7.zip\r\nunzip t7.zip\r\nrm t7.zip\r\nfi\r\n\r\n#Make sure everything is readable\/runable for container user\r\nchmod -R 755 \/mnt\/server*\r\n\r\n#Install required t7x shit\r\ncd \/mnt\/server\r\nwget ${SERVER_DOWNLOAD}\r\nunzip t7x.zip\r\nrm t7x.zip\r\n\r\n# Done\r\necho \"Done!\"",
             "container": "ghcr.io\/parkervcp\/installers:debian",
             "entrypoint": "bash"
         }
@@ -106,6 +106,16 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Download File",
+            "description": "Server files. It will be downloaded during install. Change this if it fails\r\nZombie Maps only\r\nfile must be named t7.zip",
+            "env_variable": "SERVER_DOWNLOAD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
             "field_type": "text"
         }
     ]

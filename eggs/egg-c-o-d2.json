@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2023-08-11T21:06:31+02:00",
+    "exported_at": "2025-06-12T23:15:26+02:00",
     "name": "COD2",
     "author": "dominique@wellisch-itservice.de",
     "description": null,
@@ -22,10 +22,21 @@
     },
     "scripts": {
         "installation": {
-            "script": "echo \"Install COD1 debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install unzip git screen curl wget gcc-multilib g++-multilib -y\r\napt-get -y install libstdc++5:i386\r\napt-get -y install libmysqlclient-dev:i386\r\n\r\necho \"### Downloading COD1 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ https:\/\/wellisch-itservice.de\/cod2.zip\r\ncd \/mnt\/server && unzip -o cod2.zip\r\ncd \/mnt\/server && rm cod2.zip",
+            "script": "echo \"Install COD1 debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install unzip git screen curl wget gcc-multilib g++-multilib -y\r\napt-get -y install libstdc++5:i386\r\napt-get -y install libmysqlclient-dev:i386\r\n\r\necho \"### Downloading COD2 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ ${SERVER_DOWNLOAD}\r\ncd \/mnt\/server && unzip -o cod2.zip\r\ncd \/mnt\/server && rm cod2.zip",
             "container": "alpine:3.4",
             "entrypoint": "ash"
         }
     },
-    "variables": []
+    "variables": [
+        {
+            "name": "Download File",
+            "description": "Server files. It will be downloaded during install. Change this if it fails\r\nfilename must be cod2.zip",
+            "env_variable": "SERVER_DOWNLOAD",
+            "default_value": "",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
+            "field_type": "text"
+        }
+    ]
 }
