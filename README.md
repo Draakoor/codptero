@@ -13,7 +13,8 @@
 - **Alterware** (MW2, Ghosts, AW)   (custom ftp url)  
 - **Plutonium** (BO2, BO1, MW3, WaW)   (custom ftp url)  
 - **Call of Duty 4x** (uses mount for files, manual upload required)  
-- **Call of Duty MWR**  (steamcmd)
+- **Call of Duty MWR Engine**  (steamcmd)
+  - IW7-Mod (Infinite Warfare)
   - H1-Mod  
   - H2M/HMW  
 - **Call of Duty 2**  (custom ftp url)  
