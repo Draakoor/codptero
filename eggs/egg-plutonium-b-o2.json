@@ -72,7 +72,7 @@
             "name": "Download File",
             "description": "The Server File this server will download and use to run plutonium.\r\nPlease use this with caution, this could enable a user to run arbitrary code which could be potentially harmful.\r\nFilename must be T6-Server.zip",
             "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "http:\/\/play2.wellisch-itservice.de\/T6-Server.zip",
+            "default_value": "",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
