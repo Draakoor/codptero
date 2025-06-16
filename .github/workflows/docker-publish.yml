@@ -41,6 +41,7 @@ jobs:
          - ptero-plutonium
          - ptero-plutonium-logserver
          - ptero-jka
+         - ptero-hmw
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
