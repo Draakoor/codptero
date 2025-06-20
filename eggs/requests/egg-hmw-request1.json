@@ -1,0 +1,92 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v2",
+        "update_url": null
+    },
+    "exported_at": "2025-06-20T04:50:41+02:00",
+    "name": "HMW Mod",
+    "author": "support@craftway.net",
+    "description": "H2M Dedicated Server for Windows using Proton-GE\r\nIf you want to use a mount the target should be: \/home\/container\/H2M",
+    "features": null,
+    "docker_images": {
+        "msmcpeake\/h2m-wine-minimal": "msmcpeake\/h2m-wine-minimal"
+    },
+    "file_denylist": [],
+    "startup": "cd H2M; wine hmw-mod.exe -nosteam -dedicated -memoryfix +exec server.cfg +set net_ip 0.0.0.0 +set net_port \"$SERVER_PORT\" +map_rotate &\/home\/container\/iw4m-log-server --port \"{{IW4MPORT}}",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Server started\"\r\n}",
+        "logs": "{}",
+        "stop": "^V"
+    },
+    "scripts": {
+        "installation": {
+            "script": "#!\/bin\/bash\r\n# H2M Base Installation Script\r\n#\r\n# Server Files: \/mnt\/server\r\n# Image to install with is 'ghcr.io\/parkervcp\/yolks:wine_staging'\r\n\r\n# Install packages. Default packages below are not required if using our existing install image thus speeding up the install process.\r\napt -y update\r\napt -y --no-install-recommends install curl lib32gcc-s1 ca-certificates unzip jq coreutils wget sudo\r\n\r\n# Launch Xvfb\r\necho \"[INFO] Starting Xvfb on DISPLAY=:0 (${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH})\"\r\nmkdir -p \/tmp\/.X11-unix\r\nchmod 1777 \/tmp\/.X11-unix\r\nXvfb :0 -screen 0 ${DISPLAY_WIDTH}x${DISPLAY_HEIGHT}x${DISPLAY_DEPTH} &\r\nexport DISPLAY=:0\r\n\r\nif [${INSTALL_LOCAL} == 1 ];then\r\n    echo \"Skipping install, we are using mounted files\"\r\nelse\r\n#install server files\r\nwget ${SERVER_DOWNLOAD}\r\nunzip ${FILE_NAME}\r\nfi\r\n\r\n# Winetricks\r\ncd \/mnt\/server\r\nWINEPREFIX=\/mnt\/server\/.wine\r\nWINEDEBUG=-all\r\necho \"[INFO] Installing Steam through winetricks\"\r\nwinetricks --unattended --force --no-isolate -q steam\r\nwineserver -w\r\necho \"[INFO] Starting Steam once to update\"\r\nwine \"$WINEPREFIX\/drive_c\/Program Files (x86)\/Steam\/Steam.exe\" -silent &\r\necho \"[INFO] Sleeping to wait for Steam to finish\"\r\nsleep 180  # Give Steam time to settle\r\npkill -f Steam.exe\r\nwineserver -w\r\nwine reg delete \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\" \/v Steam \/f\r\nchown -R root:root \/mnt\r\nchown -R root:root \/mnt\/server\r\nchown -R root:root \/home\/container\r\nfi\r\n\r\n# Install H2M mod files\r\nif [${INSTALL_LOCAL} == 1 ];then\r\n    echo \"Skipping install, we are using mounted files\"\r\nelse\r\ncd \/mnt\/server\/H2M\r\ncurl -sSL -o updater.sh https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/updater.sh\r\nchmod +x updater.sh\r\n.\/updater.sh\r\n\r\ncurl -sSL -o server.cfg https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/horizon-mw-call-of-duty-modern-warfare-2-multiplayer-resmasteredserver.cfg\r\n\r\ncd \/mnt\/server\r\ncurl -sSL -o H2MServer.sh https:\/\/raw.githubusercontent.com\/msmcpeake\/horizonmw\/refs\/heads\/main\/H2MServer.sh\r\nchmod +x H2MServer.sh\r\n\r\nchmod -R 777 \/mnt\/server\/H2M\r\nfi\r\n\r\n#Install Game Log Server\r\ncd \/mnt\/server\r\nwget https:\/\/github.com\/Stefanuk12\/iw4m-log-server\/releases\/download\/v1.0.5\/iw4m-log-server-x86_64-unknown-linux-gnu.tar.gz\r\ntar -xvzf iw4m-log-server-x86_64-unknown-linux-gnu.tar.gz\r\nchmod 755 iw4m-log-server\r\nrm iw4m-log-server-x86_64-unknown-linux-gnu.tar.gz\r\n\r\n## install end\r\necho \"-----------------------------------------\"\r\necho \"Installation completed...\"\r\necho \"-----------------------------------------\"",
+            "container": "ghcr.io\/parkervcp\/yolks:wine_staging",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": [
+        {
+            "name": "App ID",
+            "description": "",
+            "env_variable": "SRCDS_APPID",
+            "default_value": "393100",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|in:393100",
+            "field_type": "text"
+        },
+        {
+            "name": "Skip Winetricks",
+            "description": "",
+            "env_variable": "SKIP_WINETRICKS",
+            "default_value": "0",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "Download Server files",
+            "description": "Set this to 1 if you want to use a mount",
+            "env_variable": "INSTALL_LOCAL",
+            "default_value": "0",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|boolean",
+            "field_type": "text"
+        },
+        {
+            "name": "IW4M Admin Gamelog Server Port",
+            "description": "",
+            "env_variable": "IW4MPORT",
+            "default_value": "1626",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|integer",
+            "field_type": "text"
+        },
+        {
+            "name": "Download File",
+            "description": "",
+            "env_variable": "SERVER_DOWNLOAD",
+            "default_value": "https:\/\/silverhosting.org\/servers\/h1.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|url",
+            "field_type": "text"
+        },
+        {
+            "name": "Filename",
+            "description": "",
+            "env_variable": "FILE_NAME",
+            "default_value": "h1.zip",
+            "user_viewable": false,
+            "user_editable": false,
+            "rules": "required|string",
+            "field_type": "text"
+        }
+    ]
+}
