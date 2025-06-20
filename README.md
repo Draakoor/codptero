@@ -47,6 +47,8 @@
 ### 📱 Method 2: Game Log Server
 
 - Use eggs that already include game log server support.
+- Python based: https://github.com/RaidMax/IW4MAdmin-GameLogServer/releases
+- Rust based: https://github.com/Draakoor/iw4m-log-server/releases
 - **Sometimes you must manually set the log path**, for example:  
   `z:/home/container/Plutonium/storage/t6/main/logs/games_mp.log`
 
