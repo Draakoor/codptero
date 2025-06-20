@@ -50,7 +50,7 @@ RUN dpkg --add-architecture i386 && \
     apt update && apt install -y --no-install-recommends \
     wget curl gnupg ca-certificates software-properties-common \
     locales xvfb x11-utils xauth iproute2 \
-    python3 python3-pip \
+    python3-full python3-pip virtualenv \
     cabextract unzip p7zip-full winbind \
     libvulkan1 libnss3 libgtk-3-0 \
     fonts-liberation libasound2 jq coreutils procps \
