@@ -70,9 +70,9 @@
         },
         {
             "name": "Download File",
-            "description": "",
+            "description": "Put here your download url https://example.com/server.zip",
             "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "https:\/\/silverhosting.org\/servers\/h1.zip",
+            "default_value": "",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
@@ -80,9 +80,9 @@
         },
         {
             "name": "Filename",
-            "description": "",
+            "description": "Put here the filename example: server.zip",
             "env_variable": "FILE_NAME",
-            "default_value": "h1.zip",
+            "default_value": "",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|string",
