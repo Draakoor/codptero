@@ -78,6 +78,7 @@ A working egg for the **H2M/HMW mod** is now available!
   - H1-Mod: `/home/container/h1mod`
 
 > 🧪 _Note: Not all eggs support full console output or input. Pull requests to improve them are very welcome!_
+> _You will not get any support, when you have lack of basic linux knowledge_
 
 ---
 
