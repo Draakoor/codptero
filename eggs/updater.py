@@ -15,7 +15,7 @@ from urllib.parse import urljoin
 
 # URLs
 MANIFEST_URL = "https://raw.githubusercontent.com/HMW-mod/hmw-distribution/refs/heads/master/manifest.json"
-BASE_DOWNLOAD_URL = "https://par-1.cdn.horizonmw.org/"
+BASE_DOWNLOAD_URL = "https://price.cdn.horizonmw.org/"
 
 def calculate_sha256(file_path):
     """
