@@ -3,7 +3,7 @@
 set -e
 
 MANIFEST_URL="https://raw.githubusercontent.com/HMW-mod/hmw-distribution/refs/heads/master/manifest.json"
-BASE_DOWNLOAD_URL="https://par-1.cdn.horizonmw.org/"
+BASE_DOWNLOAD_URL="https://price.cdn.horizonmw.org/"
 
 echo "Downloading manifest.json..."
 manifest=$(curl -sSL "$MANIFEST_URL") || { echo "Failed to download manifest"; exit 1; }
