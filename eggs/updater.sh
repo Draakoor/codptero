@@ -15,6 +15,13 @@ current=0
 # Process each module
 echo "$manifest" | jq -c '.Modules[]' | while read -r module; do
     module_name=$(echo "$module" | jq -r '.Name')
+
+    # Skip the launcher module
+    if [[ "$module_name" == "launcher" ]]; then
+        echo "Skipping module: $module_name"
+        continue
+    fi
+
     module_version=$(echo "$module" | jq -r '.Version')
     download_path=$(echo "$module" | jq -r '.DownloadInfo.DownloadPath' | sed 's|\\|/|g')
 
