@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "apt update\r\napt install wget unzip -y\r\ncd \/mnt\/server\r\nwget https:\/\/www.moviebattles.org\/download\/RTVRTM.zip\r\nunzip RTVRTM.zip\r\nmv Linux\/* .\r\nrm -R Linux\/\r\nrm -R Windows\/\r\nrm RTVRTM.zip\r\nchmod 755 rtvrtm.py",
-            "container": "debian:buster-slim",
+            "container": "debian:bookworm-slim",
             "entrypoint": "bash"
         }
     },
