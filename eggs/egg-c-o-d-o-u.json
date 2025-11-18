@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "echo \"Install COD1 debian linux\" \r\n\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt-get install unzip git screen curl wget gcc-multilib g++-multilib -y\r\napt-get -y install libstdc++5:i386\r\napt-get -y install libmysqlclient-dev:i386\r\n\r\necho \"### Downloading COD1 ###\"\r\nexport HOME=\/mnt\/server\r\nwget -P \/mnt\/server\/ ${SERVER_DOWNLOAD}\r\ncd \/mnt\/server && unzip -o cod1.zip\r\ncd \/mnt\/server && rm cod1.zip",
-            "container": "debian:buster-slim",
+            "container": "debian:bookworm-slim",
             "entrypoint": "bash"
         }
     },
