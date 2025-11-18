@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "#!\/bin\/bash\r\n# CoD 4 1.2 Installation script\r\n#\r\n# Server Files: \/mnt\/server\r\ndpkg --add-architecture i386\r\napt-get update -y\r\napt install unzip curl wget -y\r\n\r\nDOWNLOAD_LINK=https:\/\/old.cod4x.ovh\/downloads\/cod4x_server-linux_21.2.zip\r\n\r\nmkdir -p \/mnt\/server\r\ncd \/mnt\/server\/\r\n\r\necho -e \"Installing required runtime libs.\"\r\nmv .\/runtime\/libstdc++.so.6 .\r\n\r\necho -e \"Generating config file\"\r\ncat <<EOF > .\/main\/server.cfg\r\nsv_hostname \"${SERVER_NAME}\"\r\ng_password \"${SERVER_PASSWORD}\"\r\nrcon_password \"${ADMIN_PASSWORD}\"\r\n\r\nsv_punkbuster \"0\"\r\nsv_cheats \"0\"\r\nsv_voice \"0\"\r\nscr_teambalance \"1\"\r\ng_allowvote \"1\"\r\n\r\nsv_authorizemode \"0\"\r\nsv_authtoken \"${SERVER_AUTH_TOKEN}\"\r\n\r\nsv_floodProtect \"1\"\r\n\r\nsv_mapRotation \"${MAP_ROTATION}\"\r\nEOF\r\n\r\necho -e \"running 'chmod +x .\/cod4_lnxded'\"\r\nchmod +x .\/cod4_lnxded\r\n\r\necho -e \"Installation complete\"",
-            "container": "debian:buster-slim",
+            "container": "debian:bookworm-slim",
             "entrypoint": "bash"
         }
     },
