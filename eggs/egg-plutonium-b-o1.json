@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "#!\/bin\/bash\r\n\r\napt -y update\r\napt -y --no-install-recommends install unzip wget ca-certificates\r\n\r\n## Mount Pterodactyl Docker Container\r\nif [ ! -d \/mnt\/server\/ ]; then\r\n    mkdir \/mnt\/server\/\r\nfi\r\n\r\n## Go to server directory\r\ncd \/mnt\/server\r\n\r\n## Download Latest Server File Version\r\necho \"Downloading latest version of plutonium please wait...\"\r\nwget ${SERVER_DOWNLOAD} -q --show-progress\r\n\r\n## Extract Server\r\nunzip -o bo1.zip\r\nrm bo1.zip\r\n\r\nchmod -R 777 .\/*\r\n## Make User Aware of the Setup Origin\r\necho \"# Unofficial Pterodactyl-Plutonium BO1 Server\" > README.md\r\n\r\necho \"Server Succesfully Installed Enjoy!\"",
-            "container": "debian:buster-slim",
+            "container": "debian:bookworm-slim",
             "entrypoint": "sh"
         }
     },
