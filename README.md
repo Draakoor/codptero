@@ -74,7 +74,7 @@ A working egg for the **H2M/HMW mod** is now available!
 - **Steam** is installed via **Winetricks**.
 - Steam runs once to install required updates.
 - Optional mounts:
-  - H2M/HMW: `/home/container/H2M`
+  - H2M/HMW: `/home/container/HMW`
   - H1-Mod: `/home/container/h1mod`
 
 > 🧪 _Note: Not all eggs support full console output or input. Pull requests to improve them are very welcome!_  
