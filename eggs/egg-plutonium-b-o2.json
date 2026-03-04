@@ -4,9 +4,9 @@
         "version": "PTDL_v2",
         "update_url": "https:\/\/raw.githubusercontent.com\/Draakoor\/codptero\/main\/eggs\/egg-plutonium-b-o2.json"
     },
-    "exported_at": "2025-05-02T04:09:43+02:00",
+    "exported_at": "2026-03-05T00:15:48+01:00",
     "name": "Plutonium BO2",
-    "author": "dominique@wellisch-itservice.de",
+    "author": "atom@our-space.xyz",
     "description": null,
     "features": null,
     "docker_images": {
@@ -22,8 +22,8 @@
     },
     "scripts": {
         "installation": {
-            "script": "#!\/bin\/bash\r\n\r\napt -y update\r\napt -y --no-install-recommends install unzip wget ca-certificates\r\n\r\n## Mount Pterodactyl Docker Container\r\nif [ ! -d \/mnt\/server\/ ]; then\r\n    mkdir \/mnt\/server\/\r\nfi\r\n\r\n## Go to server directory\r\ncd \/mnt\/server\r\n\r\n## Download Latest Server File Version\r\necho \"Downloading latest version of plutonium please wait...\"\r\nwget ${SERVER_DOWNLOAD} -q --show-progress\r\n\r\n## Extract Server\r\nunzip -o T6-Server.zip\r\nrm T6-Server.zip\r\nmv .\/T6-Server\/* .\/\r\nrm -r .\/T6-Server\r\n\r\n## Clean unneeded files\r\nif [ -d .\/IW4MAdmin];\r\nthen rm -r .\/IW4MAdmin\r\nfi;\r\n\r\n## Download Configs files\r\necho \"Downloading configs\"\r\nwget https:\/\/raw.githubusercontent.com\/xerxes-at\/T6ServerConfigs\/refs\/heads\/master\/localappdata\/Plutonium\/storage\/t6\/dedicated.cfg -O .\/Server\/Multiplayer\/main\/dedicated.cfg\r\nwget https:\/\/raw.githubusercontent.com\/xerxes-at\/T6ServerConfigs\/refs\/heads\/master\/localappdata\/Plutonium\/storage\/t6\/dedicated_zm.cfg -O .\/Server\/Multiplayer\/main\/dedicated_zm.cfg\r\n\r\nchmod -R 777 .\/*\r\n## Make User Aware of the Setup Origin\r\necho \"# Unofficial Pterodactyl-Plutonium Server https:\/\/github.com\/draakoor\/codptero\" > README.md\r\n\r\necho \"Installing game recipes\"\r\ncd \/mnt\/server\r\nwget https:\/\/github.com\/Draakoor\/t6gamerecipes\/archive\/refs\/heads\/main.zip\r\nunzip main.zip\r\nrm main.zip\r\n\r\necho \"Server Succesfully Installed Enjoy!\"",
-            "container": "debian:bookworm-slim",
+            "script": "#!\/bin\/bash\r\n\r\napt -y update\r\napt -y --no-install-recommends install unzip wget ca-certificates\r\n\r\n## Mount Pterodactyl Docker Container\r\nif [ ! -d \/mnt\/server\/ ]; then\r\n    mkdir \/mnt\/server\/\r\nfi\r\n\r\n## Go to server directory\r\ncd \/mnt\/server\r\n\r\n## Download Latest Server File Version\r\necho \"Downloading latest version of plutonium please wait...\"\r\nwget ${SERVER_DOWNLOAD} -q --show-progress\r\n\r\n## Extract Server\r\nunzip -o T6-Server.zip\r\nrm T6-Server.zip\r\nmv .\/T6-Server\/* .\/\r\nrm -r .\/T6-Server\r\n\r\n## Clean unneeded files\r\nif [ -d .\/IW4MAdmin];\r\nthen rm -r .\/IW4MAdmin\r\nfi;\r\n\r\n## Download Configs files\r\necho \"Downloading configs\"\r\nwget https:\/\/raw.githubusercontent.com\/xerxes-at\/T6ServerConfigs\/refs\/heads\/master\/localappdata\/Plutonium\/storage\/t6\/dedicated.cfg -O .\/Server\/Multiplayer\/main\/dedicated.cfg\r\nwget https:\/\/raw.githubusercontent.com\/xerxes-at\/T6ServerConfigs\/refs\/heads\/master\/localappdata\/Plutonium\/storage\/t6\/dedicated_zm.cfg -O .\/Server\/Zombie\/main\/dedicated_zm.cfg\r\n\r\nchmod -R 777 .\/*\r\n## Make User Aware of the Setup Origin\r\necho \"# Unofficial Pterodactyl-Plutonium Server https:\/\/github.com\/draakoor\/codptero\" > README.md\r\n\r\necho \"Installing game recipes\"\r\ncd \/mnt\/server\r\nwget https:\/\/github.com\/Draakoor\/t6gamerecipes\/archive\/refs\/heads\/main.zip\r\nunzip main.zip\r\nmv \/home\/container\/t6gamerecipes-main\/Plutonium\/storage\/t6\/gamesettings\/ \/home\/container\/Plutonium\/storage\/t6\/gamesettings\r\nmv \/home\/container\/t6gamerecipes-main\/Plutonium\/storage\/t6\/recipes\/ \/home\/container\/Plutonium\/storage\/t6\/recipes\r\nrm main.zip\r\n\r\necho \"Server Succesfully Installed Enjoy!\"",
+            "container": "debian:buster-slim",
             "entrypoint": "sh"
         }
     },
@@ -72,7 +72,7 @@
             "name": "Download File",
             "description": "The Server File this server will download and use to run plutonium.\r\nPlease use this with caution, this could enable a user to run arbitrary code which could be potentially harmful.\r\nFilename must be T6-Server.zip",
             "env_variable": "SERVER_DOWNLOAD",
-            "default_value": "",
+            "default_value": "http:\/\/play2.wellisch-itservice.de\/T6-Server.zip",
             "user_viewable": false,
             "user_editable": false,
             "rules": "required|url",
