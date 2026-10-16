@@ -3,7 +3,7 @@
 # Environment: Ubuntu 24.04
 # Minimum Panel Version: 1.0.0
 # ----------------------------------
-FROM ubuntu:noble
+FROM ubuntu:resolute
 
 LABEL maintainer="draakoor <dominique@wellisch-itservice.de>"
 
